@@ -1,10 +1,9 @@
 package Models;
 
-import javax.lang.model.element.NestingKind;
 import java.time.LocalDate;
 
 
-public class Condidat {
+public class Candidat {
     private int numCin;
     private String nom;
     private String prenom;
@@ -12,7 +11,7 @@ public class Condidat {
     private String adresse;
     private String telephone;
     private String typePermis;
-    Condidat(int numCin, String nom, String prenom, String adresse, LocalDate date, String telephone, String typePermis) {
+    Candidat(int numCin, String nom, String prenom, String adresse, LocalDate date, String telephone, String typePermis) {
         this.numCin = numCin;
         this.nom = nom;
         this.prenom = prenom;
