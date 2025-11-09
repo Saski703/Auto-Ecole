@@ -17,4 +17,44 @@ public class Seance {
         this.moniteur = moniteur;
         this.prix = prix;
     }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getHeure() {
+        return heure;
+    }
+
+    public void setHeure(LocalTime heure) {
+        this.heure = heure;
+    }
+
+    public Moniteur getMoniteur() {
+        return moniteur;
+    }
+
+    public void setMoniteur(Moniteur moniteur) {
+        this.moniteur = moniteur;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
 }
