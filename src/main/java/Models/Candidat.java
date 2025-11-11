@@ -9,19 +9,18 @@ public class Candidat {
     private String prenom;
     private LocalDate date;
     private String adresse;
-    private String telephone;
+    private int telephone;
     private String typePermis;
 
     public Candidat() {
     }
-    public Candidat(int numCin, String nom, String prenom, LocalDate date,  String adresse,String telephone, String typePermis) {
+    public Candidat(int numCin, String nom, String prenom, LocalDate date,  String adresse,int telephone, String typePermis) {
         this.numCin = numCin;
         this.nom = nom;
         this.prenom = prenom;
-        this.adresse = adresse;
-        this.telephone = telephone;
         this.date = date;
         this.adresse = adresse;
+        this.telephone = telephone;
         this.typePermis = typePermis;
 
     }
@@ -66,11 +65,11 @@ public class Candidat {
         this.adresse = adresse;
     }
 
-    public String getTelephone() {
+    public int getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(String telephone) {
+    public void setTelephone(int telephone) {
         this.telephone = telephone;
     }
 
@@ -80,5 +79,18 @@ public class Candidat {
 
     public void setTypePermis(String typePermis) {
         this.typePermis = typePermis;
+    }
+
+    @Override
+    public String toString() {
+        return "Candidat{" +
+                "numCin=" + numCin +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", date=" + date +
+                ", adresse='" + adresse + '\'' +
+                ", telephone=" + telephone +
+                ", typePermis='" + typePermis + '\'' +
+                '}';
     }
 }
