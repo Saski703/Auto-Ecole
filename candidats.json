@@ -1,0 +1,17 @@
+[ {
+  "numCin" : 12345678,
+  "nom" : "Jean",
+  "prenom" : "Martin",
+  "date" : [ 2025, 1, 10 ],
+  "adresse" : "123 Rue de Paris",
+  "telephone" : "55123456",
+  "typePermis" : "B"
+}, {
+  "numCin" : 87654321,
+  "nom" : "omar",
+  "prenom" : "Ben Ali",
+  "date" : [ 2025, 2, 20 ],
+  "adresse" : "456 Ave Habib",
+  "telephone" : "22987654",
+  "typePermis" : "A"
+} ]
