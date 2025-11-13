@@ -14,7 +14,18 @@ public class Candidat {
 
     public Candidat() {
     }
-    public Candidat(int numCin, String nom, String prenom, LocalDate date,  String adresse,int telephone, String typePermis) {
+    public Candidat(int numCin, String nom, String prenom, String adresse,int telephone, String typePermis) {
+        this.numCin = numCin;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.date = LocalDate.now();
+        this.adresse = adresse;
+        this.telephone = telephone;
+        this.typePermis = typePermis;
+
+    }
+
+    public Candidat(int numCin, String nom, String prenom, LocalDate date, String adresse,int telephone, String typePermis) {
         this.numCin = numCin;
         this.nom = nom;
         this.prenom = prenom;
@@ -90,7 +101,8 @@ public class Candidat {
                 ", date=" + date +
                 ", adresse='" + adresse + '\'' +
                 ", telephone=" + telephone +
-                ", typePermis='" + typePermis + '\'' +
+                ", typePermis=" + typePermis + '\'' +
                 '}';
     }
+
 }

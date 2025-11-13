@@ -44,9 +44,6 @@ public class CondidatUi {
         String nom = sc.next();
         System.out.println("Prenom :");
         String prenom = sc.next();
-        System.out.println("Date :");
-        String d = sc.next();
-        LocalDate date = LocalDate.parse(d);//  2025/10/10
         System.out.println("Adresse :");
         String adresse = sc.next();
         System.out.println("telephone :");
@@ -54,11 +51,66 @@ public class CondidatUi {
         System.out.println("type permis :");
         String permis = sc.next();
 
-        Candidat c = new Candidat(numCin, nom, prenom, date, adresse, telephone, permis);
+        Candidat c = new Candidat(numCin, nom, prenom, adresse, telephone, permis);
         candidatControllers.ajoutCandidat(c);
     }
 
     public void modifierCandidat(){
+        System.out.println("-----Modifier Condidat-----");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Num Cin :");
+        int numCin = sc.nextInt();
+
+        Candidat c = candidatControllers.recherchreCandidat(numCin);
+        String name = c.getNom();
+        String prenom = c.getPrenom();
+        String adresse = c.getAdresse();
+        int telephone = c.getTelephone();
+        String permis = c.getTypePermis();
+        LocalDate date = c.getDate();
+
+        if(c!=null){
+            System.out.println(c.toString());
+            System.out.println("do you want to modifier 'name'? (y/n)");
+            String response = sc.next();
+            if(response.equals("y")){
+                System.out.println("new name: ");
+                name = sc.next();
+            }
+
+            System.out.println("do you want to modifier 'prenom'? (y/n)");
+            response = sc.next();
+            if(response.equals("y")){
+                System.out.println("new prenom: ");
+                prenom = sc.next();
+            }
+            System.out.println("do you want to modifier 'adresse'? (y/n)");
+            response = sc.next();
+            if(response.equals("y")){
+                System.out.println("new adresse: ");
+                adresse = sc.next();
+            }
+            System.out.println("do you want to modifier 'telephone'? (y/n)");
+            response = sc.next();
+            if(response.equals("y")){
+                System.out.println("new telephone: ");
+                telephone = sc.nextInt();
+            }
+            System.out.println("do you want to modifier 'permis'? (y/n)");
+            response = sc.next();
+            if(response.equals("y")){
+                System.out.println("new permis: ");
+                permis = sc.next();
+            }
+
+            Candidat c1 = new Candidat(numCin, name, prenom, date,  adresse, telephone, permis);
+
+            candidatControllers.suppressionCandidat(c.getNumCin());
+            candidatControllers.ajoutCandidat(c1);
+
+        }else {
+            System.out.println("Candidat inexistant");
+        }
 
     }
 

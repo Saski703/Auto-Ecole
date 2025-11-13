@@ -22,4 +22,5 @@ public class CandidatControllers {
     public boolean suppressionCandidat(int numCin) {
         return candidatServices.suppressionCandidat(numCin);
     }
+
 }
