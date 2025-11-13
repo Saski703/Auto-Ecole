@@ -22,5 +22,11 @@ public class CandidatControllers {
     public boolean suppressionCandidat(int numCin) {
         return candidatServices.suppressionCandidat(numCin);
     }
+    public boolean test(String m){
+        return candidatServices.test(m);
+    }
+    public boolean testp(String p){
+        return candidatServices.test(p);
+    }
 
 }

@@ -38,19 +38,28 @@ public class CondidatUi {
     public void ajoutCandidat(){
         System.out.println("-----Ajout Condidat-----");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Num Cin");
-        int numCin = sc.nextInt();
-        System.out.println("Nom :");
-        String nom = sc.next();
-        System.out.println("Prenom :");
-        String prenom = sc.next();
+        do {
+            System.out.println("Num Cin");
+            int numCin = sc.nextInt();
+        }while (String.ValueOf(numCin)!=8);
+        do {
+            System.out.println("Nom :");
+            String nom = sc.next();
+        }while(candidatControllers.test==false);
+        do {
+            System.out.println("Prenom :");
+            String prenom = sc.next();
+        }while(candidatControllers.test==false);
         System.out.println("Adresse :");
         String adresse = sc.next();
-        System.out.println("telephone :");
-        int telephone = sc.nextInt();
-        System.out.println("type permis :");
-        String permis = sc.next();
-
+        do {
+            System.out.println("telephone :");
+            int telephone = sc.nextInt();
+        }while(String.ValueOf(numCin)!=8);
+        do {
+            System.out.println("type permis :");
+            String permis = sc.next();
+        }while(candidatControllers.testP==false);
         Candidat c = new Candidat(numCin, nom, prenom, adresse, telephone, permis);
         candidatControllers.ajoutCandidat(c);
     }
