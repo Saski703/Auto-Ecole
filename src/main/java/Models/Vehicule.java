@@ -9,7 +9,17 @@ public class Vehicule {
     private double kmTotale;
     private double kmReste;
 
-    public Vehicule(String type, int numMat, LocalDate date, double kmTotale, double kmReste) {
+    public Vehicule() {}
+    public Vehicule(int numMat,String type,  double kmTotale, double kmReste) {
+        this.type = type;
+        this.numMat = numMat;
+        this.date = LocalDate.now();
+        this.kmTotale = kmTotale;
+        this.kmReste = kmReste;
+    }
+
+    // Constructor to preserve date during modification
+    public Vehicule(int numMat,String type, LocalDate date, double kmTotale, double kmReste) {
         this.type = type;
         this.numMat = numMat;
         this.date = date;
@@ -55,5 +65,16 @@ public class Vehicule {
 
     public void setKmReste(double kmReste) {
         this.kmReste = kmReste;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicule{" +
+                "type='" + type + '\'' +
+                ", numMat=" + numMat +
+                ", date=" + date +
+                ", kmTotale=" + kmTotale +
+                ", kmReste=" + kmReste +
+                '}';
     }
 }

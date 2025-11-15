@@ -1,13 +1,13 @@
 package Controllers;
 import Models.Candidat;
 import Services.CandidatServices;
-import Ui.CondidatUi;
+import Ui.CandidatUi;
 
 public class CandidatControllers {
     CandidatServices candidatServices = new CandidatServices();
     public void init(){
-        CondidatUi condidatui = new CondidatUi();
-        condidatui.Menu();
+        CandidatUi candidatui = new CandidatUi();
+        candidatui.Menu();
 
     }
 
@@ -15,7 +15,7 @@ public class CandidatControllers {
         candidatServices.ajoutCandidat(c);
     }
 
-    public Candidat recherchreCandidat(int numCin) {
+    public Candidat rechercheCandidat(int numCin) {
         return candidatServices.recherchreCondidat(numCin);
     }
 

@@ -6,7 +6,7 @@ import Models.Candidat;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class CondidatUi {
+public class CandidatUi {
 
     CandidatControllers candidatControllers = new CandidatControllers();
 
@@ -40,6 +40,10 @@ public class CondidatUi {
         Scanner sc = new Scanner(System.in);
         System.out.println("Num Cin");
         int numCin = sc.nextInt();
+        if(candidatControllers.rechercheCandidat(numCin) != null) {
+            System.out.println("Un Candidat with this NumCin already exists.");
+            return;
+        }
         System.out.println("Nom :");
         String nom = sc.next();
         System.out.println("Prenom :");
@@ -61,7 +65,7 @@ public class CondidatUi {
         System.out.println("Num Cin :");
         int numCin = sc.nextInt();
 
-        Candidat c = candidatControllers.recherchreCandidat(numCin);
+        Candidat c = candidatControllers.rechercheCandidat(numCin);
         String name = c.getNom();
         String prenom = c.getPrenom();
         String adresse = c.getAdresse();
@@ -133,7 +137,7 @@ public class CondidatUi {
         Scanner sc = new Scanner(System.in);
         System.out.println("Num Cin :");
         int numCin = sc.nextInt();
-        Candidat c = candidatControllers.recherchreCandidat(numCin);
+        Candidat c = candidatControllers.rechercheCandidat(numCin);
         if(c!=null){
             System.out.println(c.toString());
         }else {

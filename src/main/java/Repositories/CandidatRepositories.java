@@ -15,8 +15,6 @@ public class CandidatRepositories {
     private static final String FILE_PATH = "candidats.json";
     private final ObjectMapper mapper;
 
-    // We remove the "private List<Candidat> candidats" field
-    // It's better to read from the file each time.
 
     public CandidatRepositories() {
         this.mapper = new ObjectMapper();

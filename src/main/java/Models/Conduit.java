@@ -9,4 +9,12 @@ public class Conduit extends Seance{
         super(num, date, heure, moniteur, prix);
         this.vehicule = vehicule;
     }
+
+    public Vehicule getVehicule() {
+        return vehicule;
+    }
+
+    public void setVehicule(Vehicule vehicule) {
+        this.vehicule = vehicule;
+    }
 }
