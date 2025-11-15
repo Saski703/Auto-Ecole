@@ -33,7 +33,9 @@ public class CandidatUi {
                 break;
             default:
                 System.out.println("Invalid choice");
+
         }
+        Menu();
     }
     public void ajoutCandidat(){
         System.out.println("-----Ajout Condidat-----");
@@ -57,6 +59,7 @@ public class CandidatUi {
 
         Candidat c = new Candidat(numCin, nom, prenom, adresse, telephone, permis);
         candidatControllers.ajoutCandidat(c);
+        sc.close();
     }
 
     public void modifierCandidat(){
@@ -64,16 +67,18 @@ public class CandidatUi {
         Scanner sc = new Scanner(System.in);
         System.out.println("Num Cin :");
         int numCin = sc.nextInt();
-
         Candidat c = candidatControllers.rechercheCandidat(numCin);
-        String name = c.getNom();
-        String prenom = c.getPrenom();
-        String adresse = c.getAdresse();
-        int telephone = c.getTelephone();
-        String permis = c.getTypePermis();
-        LocalDate date = c.getDate();
+
 
         if(c!=null){
+
+            String name = c.getNom();
+            String prenom = c.getPrenom();
+            String adresse = c.getAdresse();
+            int telephone = c.getTelephone();
+            String permis = c.getTypePermis();
+            LocalDate date = c.getDate();
+
             System.out.println(c.toString());
             System.out.println("do you want to modifier 'name'? (y/n)");
             String response = sc.next();
@@ -116,6 +121,7 @@ public class CandidatUi {
             System.out.println("Candidat inexistant");
         }
 
+
     }
 
     public void suppressionCandidat(){
@@ -129,6 +135,7 @@ public class CandidatUi {
         }else {
             System.out.println("Candidat introuvable");
         }
+
 
     }
 

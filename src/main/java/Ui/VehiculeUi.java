@@ -44,6 +44,7 @@ public class VehiculeUi {
                 System.out.println("Invalid choice");
                 Menu();
         }
+
     }
 
     public void ajoutVehicule() {
@@ -67,6 +68,7 @@ public class VehiculeUi {
 
         Vehicule v = new Vehicule(numMat, type, kmTotale, kmReste);
         vehiculeControllers.ajoutVehicule(v);
+
     }
 
     public void modifierVehicule() {
@@ -119,6 +121,7 @@ public class VehiculeUi {
         } else {
             System.out.println("Vehicule inexistant");
         }
+
     }
 
     public void suppressionVehicule() {
@@ -132,6 +135,7 @@ public class VehiculeUi {
         } else {
             System.out.println("Vehicule introuvable");
         }
+
     }
 
     public void rechercherVehicule() {
@@ -145,5 +149,6 @@ public class VehiculeUi {
         } else {
             System.out.println("Vehicule inexistant");
         }
+
     }
 }
