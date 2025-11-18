@@ -1,0 +1,19 @@
+[ {
+  "cin" : 11,
+  "nom" : "zzaea",
+  "prenom" : "azeaze",
+  "etat" : false,
+  "prixCode" : 54.0,
+  "prixConduit" : 54.0,
+  "nbHeureCode" : 54,
+  "nbHeureConduit" : 54
+}, {
+  "cin" : 65445,
+  "nom" : "efef",
+  "prenom" : "efef",
+  "etat" : true,
+  "prixCode" : 500.0,
+  "prixConduit" : 200.0,
+  "nbHeureCode" : 20,
+  "nbHeureConduit" : 10
+} ]
