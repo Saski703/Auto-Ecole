@@ -3,12 +3,14 @@ package Ui;
 import Controllers.VehiculeControllers;
 import Models.Vehicule;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class VehiculeUi {
 
     VehiculeControllers vehiculeControllers = new VehiculeControllers();
+
 
     public void Menu() {
         System.out.println("-----Menu Vehicule-----");
@@ -53,7 +55,6 @@ public class VehiculeUi {
         System.out.println("Num Matricule:");
         int numMat = sc.nextInt();
 
-
         if(vehiculeControllers.rechercherVehicule(numMat) != null) {
             System.out.println("Un vehicule with this matricule already exists.");
             return;
@@ -61,14 +62,25 @@ public class VehiculeUi {
 
         System.out.println("Type (ex: voiture, camion):");
         String type = sc.next();
+        System.out.println("date");
+        String d = sc.next();
+        LocalDate date = LocalDate.parse(d);
         System.out.println("Km Totale:");
         double kmTotale = sc.nextDouble();
-        System.out.println("Km Reste (pour entretien):");
-        double kmReste = sc.nextDouble();
-
-        Vehicule v = new Vehicule(numMat, type, kmTotale, kmReste);
+        System.out.println("date vignette");
+        String d1 = sc.next();
+        LocalDate dateVignette = LocalDate.parse(d1);
+        System.out.println("Date Assurance");
+        String d2 = sc.next();
+        LocalDate dateAssurance = LocalDate.parse(d2);
+        System.out.println("Date visite technique");
+        String d3 = sc.next();
+        LocalDate dateVisiteTechnique = LocalDate.parse(d3);
+        System.out.println("Date Vidange");
+        String d4 = sc.next();
+        LocalDate dateVidange = LocalDate.parse(d4);
+        Vehicule v = new Vehicule(numMat, type,date, kmTotale, dateVignette, dateAssurance, dateVisiteTechnique, dateVidange);
         vehiculeControllers.ajoutVehicule(v);
-
     }
 
     public void modifierVehicule() {
@@ -85,8 +97,11 @@ public class VehiculeUi {
             // Get current values
             String type = v.getType();
             double kmTotale = v.getKmTotale();
-            double kmReste = v.getKmReste();
-            LocalDate date = v.getDate(); // Preserve original date
+            LocalDate date = v.getDate();
+            LocalDate dateVignette = v.getDateVignette();
+            LocalDate dateAssurance = v.getDateAssurance();
+            LocalDate dateVisiteTechnique = v.getDateVisiteTechnique();
+            LocalDate dateVidange = v.getDateVidange();
 
             System.out.println("Voulez-vous modifier 'type'? (y/n)");
             String response = sc.next();
@@ -102,17 +117,8 @@ public class VehiculeUi {
                 kmTotale = sc.nextDouble();
             }
 
-            System.out.println("Voulez-vous modifier 'kmReste'? (y/n)");
-            response = sc.next();
-            if (response.equalsIgnoreCase("y")) {
-                System.out.println("Nouveau kmReste: ");
-                kmReste = sc.nextDouble();
-            }
+            Vehicule vUpdated = new Vehicule(numMat, type, date, kmTotale, dateVignette, dateAssurance, dateVisiteTechnique, dateVidange);
 
-            // Create new object with updated info
-            Vehicule vUpdated = new Vehicule(numMat, type, date, kmTotale, kmReste);
-
-            // Following your CandidatUi pattern: delete old, add new
             vehiculeControllers.suppressionVehicule(v.getNumMat());
             vehiculeControllers.ajoutVehicule(vUpdated);
 
@@ -146,6 +152,7 @@ public class VehiculeUi {
         Vehicule v = vehiculeControllers.rechercherVehicule(numMat);
         if (v != null) {
             System.out.println(v.toString());
+            v.afficherAlertes();
         } else {
             System.out.println("Vehicule inexistant");
         }

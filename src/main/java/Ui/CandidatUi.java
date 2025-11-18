@@ -16,6 +16,7 @@ public class CandidatUi {
         System.out.println("2.Modifier Condidat");
         System.out.println("3.Supprimer Condidat");
         System.out.println("4.Rechercher Condidat");
+        System.out.println("5.afficher Les Condidats");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         switch(choice){
@@ -31,9 +32,11 @@ public class CandidatUi {
             case 4:
                 recherchreCandidat();
                 break;
+            case 5:
+                afficherLesCandidats();
+                break;
             default:
                 System.out.println("Invalid choice");
-
         }
         Menu();
     }
@@ -59,7 +62,6 @@ public class CandidatUi {
 
         Candidat c = new Candidat(numCin, nom, prenom, adresse, telephone, permis);
         candidatControllers.ajoutCandidat(c);
-        sc.close();
     }
 
     public void modifierCandidat(){
@@ -151,6 +153,11 @@ public class CandidatUi {
             System.out.println("Candidat inexistant");
         }
 
+    }
+
+    public void afficherLesCandidats() {
+        System.out.println("-----Afficher les Condidat-----");
+        candidatControllers.afficherLesCandidats();
     }
 
 }

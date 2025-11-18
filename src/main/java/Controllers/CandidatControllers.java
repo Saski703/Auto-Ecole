@@ -23,4 +23,8 @@ public class CandidatControllers {
         return candidatServices.suppressionCandidat(numCin);
     }
 
+    public void afficherLesCandidats(){
+        candidatServices.afficherLesCandidats();
+    }
+
 }

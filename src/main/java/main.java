@@ -11,6 +11,7 @@ public class main {
             Menu();
     }
 
+
     public static void Menu(){
         System.out.println("Menu Principal");
         System.out.println("1. Candidat");
@@ -38,10 +39,7 @@ public class main {
 
             default:
                 System.out.println("Invalid choice");
-
-
         }
         Menu();
-
     }
 }

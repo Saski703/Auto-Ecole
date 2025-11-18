@@ -21,10 +21,6 @@ public class VehiculeRepositories {
         this.mapper.registerModule(new JavaTimeModule());
     }
 
-    /**
-     * Reads the list of vehicles, adds a new one, and saves the updated list back to JSON.
-     * @param v The new Vehicule to add.
-     */
     public void ajoutVehicule(Vehicule v) {
         List<Vehicule> vehicules; // Declare list
         File file = new File(FILE_PATH);
@@ -35,14 +31,11 @@ public class VehiculeRepositories {
                 // If file has content, read it into the list
                 vehicules = mapper.readValue(file, new TypeReference<List<Vehicule>>() {});
             } else {
-                // Otherwise, start with a new empty list
                 vehicules = new ArrayList<>();
             }
 
-            // 2. ADD the new vehicule to the list
             vehicules.add(v);
 
-            // 3. WRITE the full, updated list back to the file
             mapper.writerWithDefaultPrettyPrinter()
                     .writeValue(file, vehicules);
 
