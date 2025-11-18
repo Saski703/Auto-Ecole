@@ -1,7 +1,6 @@
 package Repositories;
 
 import Models.Vehicule;
-// Import this TypeReference to help Jackson read the List
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -10,102 +9,69 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class VehiculeRepositories {
+
     private static final String FILE_PATH = "vehicules.json";
     private final ObjectMapper mapper;
 
     public VehiculeRepositories() {
-        this.mapper = new ObjectMapper();
-        // Register the JavaTimeModule to correctly handle LocalDate
-        this.mapper.registerModule(new JavaTimeModule());
+        mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
     }
 
-    public void ajoutVehicule(Vehicule v) {
-        List<Vehicule> vehicules; // Declare list
+    public void save(Vehicule v) {
         File file = new File(FILE_PATH);
+        List<Vehicule> vehicules;
 
         try {
-            // 1. READ existing list from JSON
-            if (file.exists() && file.length() > 0) {
-                // If file has content, read it into the list
-                vehicules = mapper.readValue(file, new TypeReference<List<Vehicule>>() {});
-            } else {
-                vehicules = new ArrayList<>();
-            }
+            vehicules = (file.exists() && file.length() > 0)
+                    ? mapper.readValue(file, new TypeReference<List<Vehicule>>() {})
+                    : new ArrayList<>();
 
             vehicules.add(v);
-
-            mapper.writerWithDefaultPrettyPrinter()
-                    .writeValue(file, vehicules);
-
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, vehicules);
             System.out.println("✅ Vehicule saved successfully to JSON file!");
 
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("❌ Error while saving vehicule!");
+            e.printStackTrace();
         }
     }
 
-    /**
-     * Reads and returns all vehicles from the JSON file.
-     * @return A list of all vehicles, or an empty list if the file is empty/missing or an error occurs.
-     */
     public List<Vehicule> getAllVehicules() {
         File file = new File(FILE_PATH);
-        List<Vehicule> vehicules = new ArrayList<>();
 
         try {
-            if (file.exists() && file.length() > 0) {
-                vehicules = mapper.readValue(file, new TypeReference<List<Vehicule>>() {});
-            }
+            return (file.exists() && file.length() > 0)
+                    ? mapper.readValue(file, new TypeReference<List<Vehicule>>() {})
+                    : new ArrayList<>();
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("❌ Error while reading vehicules!");
+            e.printStackTrace();
+            return new ArrayList<>();
         }
-
-        return vehicules;
     }
 
-    /**
-     * Searches for a vehicle by its registration number.
-     * @param numMat The registration number (numMat) to search for.
-     * @return The found Vehicule, or null if not found.
-     */
-    public Vehicule rechercherVehicule(int numMat) {
-        List<Vehicule> allVehicules = getAllVehicules();
-
-        for (Vehicule vehicule : allVehicules) {
-            if (vehicule.getNumMat() == numMat) {
-                return vehicule;
-            }
+    public Vehicule rechercherVehicule(String Mat) {
+        for (Vehicule v : getAllVehicules()) {
+            if (Objects.equals(v.getMat(), Mat)) return v;
         }
-
         return null;
     }
 
-    /**
-     * Deletes a vehicle by its registration number and updates the JSON file.
-     * @param numMat The registration number (numMat) of the vehicle to delete.
-     * @return true if the vehicle was found and deleted, false otherwise.
-     */
-    public boolean suppressionVehicule(int numMat) {
-        List<Vehicule> allVehicules = getAllVehicules();
-
-        // Use removeIf to find and remove the matching vehicule
-        boolean removed = allVehicules.removeIf(vehicule -> vehicule.getNumMat() == numMat);
-
-        File file = new File(FILE_PATH);
+    public boolean suppressionVehicule(String Mat) {
+        List<Vehicule> vehicules = getAllVehicules();
+        boolean removed = vehicules.removeIf(v -> Objects.equals(v.getMat(), Mat));
 
         if (removed) {
             try {
-                // If removed, write the modified list back to the file
-                mapper.writerWithDefaultPrettyPrinter().writeValue(file, allVehicules);
+                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), vehicules);
                 System.out.println("✅ Vehicule deleted successfully!");
-
             } catch (IOException e) {
-                e.printStackTrace();
                 System.out.println("❌ Error while updating file after deletion!");
+                e.printStackTrace();
             }
         }
         return removed;

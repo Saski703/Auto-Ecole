@@ -5,6 +5,7 @@ import Models.Vehicule;
 
 import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class VehiculeUi {
@@ -18,7 +19,10 @@ public class VehiculeUi {
         System.out.println("2. Modifier Vehicule");
         System.out.println("3. Supprimer Vehicule");
         System.out.println("4. Rechercher Vehicule");
-        System.out.println("5. Quitter");
+        System.out.println("5. Afficher Vehicules");
+        System.out.println("6. Afficher TABLEAU DE BORD");
+        System.out.println("7. Saisir Maintenance");
+        System.out.println("8. Quitter");
 
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
@@ -40,6 +44,12 @@ public class VehiculeUi {
                 Menu();
                 break;
             case 5:
+                afficherVehicules();
+            case 6:
+                afficherTableauDeBoard();
+            case 7:
+                SaisirMaintenance();
+            case 8:
                 System.out.println("Retour au menu principal...");
                 break;
             default:
@@ -52,10 +62,10 @@ public class VehiculeUi {
     public void ajoutVehicule() {
         System.out.println("-----Ajout Vehicule-----");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Num Matricule:");
-        int numMat = sc.nextInt();
+        System.out.println("Matricule:");
+        String Mat = sc.next();
 
-        if(vehiculeControllers.rechercherVehicule(numMat) != null) {
+        if(vehiculeControllers.rechercherVehicule(Mat) != null) {
             System.out.println("Un vehicule with this matricule already exists.");
             return;
         }
@@ -65,6 +75,8 @@ public class VehiculeUi {
         System.out.println("date");
         String d = sc.next();
         LocalDate date = LocalDate.parse(d);
+        System.out.println("Age : ");
+        int age = sc.nextInt();
         System.out.println("Km Totale:");
         double kmTotale = sc.nextDouble();
         System.out.println("date vignette");
@@ -79,17 +91,18 @@ public class VehiculeUi {
         System.out.println("Date Vidange");
         String d4 = sc.next();
         LocalDate dateVidange = LocalDate.parse(d4);
-        Vehicule v = new Vehicule(numMat, type,date, kmTotale, dateVignette, dateAssurance, dateVisiteTechnique, dateVidange);
+        Vehicule v = new Vehicule(Mat, type,date, age, kmTotale, dateVignette, dateAssurance, dateVisiteTechnique, dateVidange);
         vehiculeControllers.ajoutVehicule(v);
     }
 
     public void modifierVehicule() {
         System.out.println("-----Modifier Vehicule-----");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Num Matricule du vehicule à modifier:");
-        int numMat = sc.nextInt();
 
-        Vehicule v = vehiculeControllers.rechercherVehicule(numMat);
+        System.out.println("Matricule du vehicule à modifier:");
+        String Mat = sc.next();  // Matricule is String in your Vehicule class
+
+        Vehicule v = vehiculeControllers.rechercherVehicule(Mat);
 
         if (v != null) {
             System.out.println("Vehicule trouvé: " + v.toString());
@@ -98,28 +111,76 @@ public class VehiculeUi {
             String type = v.getType();
             double kmTotale = v.getKmTotale();
             LocalDate date = v.getDate();
+            int age = v.getAge();
             LocalDate dateVignette = v.getDateVignette();
             LocalDate dateAssurance = v.getDateAssurance();
             LocalDate dateVisiteTechnique = v.getDateVisiteTechnique();
             LocalDate dateVidange = v.getDateVidange();
 
-            System.out.println("Voulez-vous modifier 'type'? (y/n)");
-            String response = sc.next();
+            String response;
+
+            System.out.println("Modifier 'type'? (y/n)");
+            response = sc.next();
             if (response.equalsIgnoreCase("y")) {
                 System.out.println("Nouveau type: ");
                 type = sc.next();
             }
 
-            System.out.println("Voulez-vous modifier 'kmTotale'? (y/n)");
+            System.out.println("Modifier 'kmTotale'? (y/n)");
             response = sc.next();
             if (response.equalsIgnoreCase("y")) {
                 System.out.println("Nouveau kmTotale: ");
                 kmTotale = sc.nextDouble();
             }
 
-            Vehicule vUpdated = new Vehicule(numMat, type, date, kmTotale, dateVignette, dateAssurance, dateVisiteTechnique, dateVidange);
+            System.out.println("Modifier 'date' (date d'achat)? (y/n)");
+            response = sc.next();
+            if (response.equalsIgnoreCase("y")) {
+                System.out.println("Nouvelle date (yyyy-MM-dd): ");
+                date = LocalDate.parse(sc.next());
+            }
 
-            vehiculeControllers.suppressionVehicule(v.getNumMat());
+            System.out.println("Modifier 'age'? (y/n)");
+            response = sc.next();
+            if (response.equalsIgnoreCase("y")) {
+                System.out.println("Nouvel age: ");
+                age = sc.nextInt();
+            }
+
+            System.out.println("Modifier 'dateVignette'? (y/n)");
+            response = sc.next();
+            if (response.equalsIgnoreCase("y")) {
+                System.out.println("Nouvelle date vignette (yyyy-MM-dd): ");
+                dateVignette = LocalDate.parse(sc.next());
+            }
+
+            System.out.println("Modifier 'dateAssurance'? (y/n)");
+            response = sc.next();
+            if (response.equalsIgnoreCase("y")) {
+                System.out.println("Nouvelle date assurance (yyyy-MM-dd): ");
+                dateAssurance = LocalDate.parse(sc.next());
+            }
+
+            System.out.println("Modifier 'dateVisiteTechnique'? (y/n)");
+            response = sc.next();
+            if (response.equalsIgnoreCase("y")) {
+                System.out.println("Nouvelle date visite technique (yyyy-MM-dd): ");
+                dateVisiteTechnique = LocalDate.parse(sc.next());
+            }
+
+            System.out.println("Modifier 'dateVidange'? (y/n)");
+            response = sc.next();
+            if (response.equalsIgnoreCase("y")) {
+                System.out.println("Nouvelle date vidange (yyyy-MM-dd): ");
+                dateVidange = LocalDate.parse(sc.next());
+            }
+
+            // Create updated object
+            Vehicule vUpdated = new Vehicule(Mat, type, date, age, kmTotale,
+                    dateVignette, dateAssurance, dateVisiteTechnique, dateVidange);
+
+            // Replace old object
+            vehiculeControllers.suppressionVehicule(v.getMat());
             vehiculeControllers.ajoutVehicule(vUpdated);
 
             System.out.println("Vehicule modifié.");
@@ -127,15 +188,15 @@ public class VehiculeUi {
         } else {
             System.out.println("Vehicule inexistant");
         }
-
     }
+
 
     public void suppressionVehicule() {
         System.out.println("-----Supprimer Vehicule-----");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Num Matricule:");
-        int numMat = sc.nextInt();
-        boolean v = vehiculeControllers.suppressionVehicule(numMat);
+        System.out.println("Matricule:");
+        String Mat = sc.next();
+        boolean v = vehiculeControllers.suppressionVehicule(Mat);
         if (v) {
             System.out.println("Vehicule supprimé");
         } else {
@@ -147,15 +208,37 @@ public class VehiculeUi {
     public void rechercherVehicule() {
         System.out.println("-----Recherche Vehicule-----");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Num Matricule:");
-        int numMat = sc.nextInt();
-        Vehicule v = vehiculeControllers.rechercherVehicule(numMat);
+        System.out.println("Matricule:");
+        String Mat = sc.next();
+        Vehicule v = vehiculeControllers.rechercherVehicule(Mat);
         if (v != null) {
             System.out.println(v.toString());
-            v.afficherAlertes();
         } else {
             System.out.println("Vehicule inexistant");
         }
 
     }
+
+    public void afficherVehicules(){
+        System.out.println("-----Afficher les Vehicules-----");
+        vehiculeControllers.afficherVehicules();
+    }
+
+    public void afficherTableauDeBoard(){
+        System.out.println("-----Afficher les Tableau de Board-----");
+        List<String> alertes = vehiculeControllers.getAlertes();
+        if (alertes.isEmpty()) {
+            System.out.println("\n   TOUT EST EN ORDRE.");
+            System.out.println("    Aucune maintenance ni papier administratif requis.\n");
+        }else {
+            for (String alerte : alertes) {
+                System.out.println(alerte);
+            }
+        }
+    }
+
+    public void SaisirMaintenance(){
+        //TODO;
+    }
+
 }

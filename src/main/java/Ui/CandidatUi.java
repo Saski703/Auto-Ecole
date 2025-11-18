@@ -156,7 +156,7 @@ public class CandidatUi {
     }
 
     public void afficherLesCandidats() {
-        System.out.println("-----Afficher les Condidat-----");
+        System.out.println("-----Afficher les Condidats-----");
         candidatControllers.afficherLesCandidats();
     }
 
