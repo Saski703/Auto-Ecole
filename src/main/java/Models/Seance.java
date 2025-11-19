@@ -1,23 +1,42 @@
 package Models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-public class Seance {
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+// 2. Map the values of "type" to the specific classes
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = SeanceCode.class, name = "CODE"),
+        @JsonSubTypes.Type(value = SeanceConduit.class, name = "CONDUITE")
+})
+public abstract class Seance {
     protected int num;
     protected LocalDate date;
     protected LocalTime heure;
     protected Moniteur moniteur;
+    //protected Candidat candidat;
     protected double prix;
 
-    Seance(int num, LocalDate date, LocalTime heure, Moniteur moniteur, double prix) {
+    // --------------------Constructeurs--------------------
+    public Seance() {}
+    public Seance(int num, LocalDate date, LocalTime heure, Moniteur moniteur, double prix) {
         this.num = num;
         this.date = date;
         this.heure = heure;
         this.moniteur = moniteur;
         this.prix = prix;
+        //this.candidat = candidat;
     }
 
+    //
+    public abstract String getType();
+    // -------------------- Getters and Setters --------------------
     public int getNum() {
         return num;
     }
@@ -50,11 +69,30 @@ public class Seance {
         this.moniteur = moniteur;
     }
 
+    /*public Candidat getCandidat() {
+        return candidat;
+    }
+
+    public void setCandidat(Candidat candidat) {
+        this.candidat = candidat;
+    }*/
+
     public double getPrix() {
         return prix;
     }
 
     public void setPrix(double prix) {
         this.prix = prix;
+    }
+    // -------------------- toString --------------------
+    @Override
+    public String toString() {
+        return "Seance{" +
+                "num=" + num +
+                ", date='" + date + '\'' +
+                ", heure='" + heure + '\'' +
+                ", cinmMoniteur=" + moniteur.getCin() +
+                ", prix='" + prix + '\'' +
+                '}';
     }
 }

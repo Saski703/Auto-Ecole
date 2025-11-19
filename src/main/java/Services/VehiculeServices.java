@@ -106,9 +106,14 @@ public class VehiculeServices {
 
     public void afficherVehicules(){
         List<Vehicule> vehicules = vehiculeRepos.getAllVehicules();
-
-        for (Vehicule vehicule : vehicules) {
-            System.out.println(vehicule.toString());
+        if (vehicules.isEmpty()) {
+            System.out.println("Vehicules n'existe pas");
         }
+        else {
+            for (Vehicule vehicule : vehicules) {
+                System.out.println(vehicule.toString());
+            }
+        }
+
     }
 }

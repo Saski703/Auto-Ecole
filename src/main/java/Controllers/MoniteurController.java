@@ -4,7 +4,7 @@ import Models.Moniteur;
 import Services.MoniteurServices;
 import Ui.MoniteurUi;
 
-public class MoniteurControllers {
+public class MoniteurController {
 
     MoniteurServices moniteurServices = new MoniteurServices();
 
@@ -23,5 +23,14 @@ public class MoniteurControllers {
 
     public boolean suppressionMoniteur(int cin) {
         return moniteurServices.suppressionMoniteur(cin);
+    }
+
+    public void afficherMoniteurs() {
+        System.out.println("-----Afficher Moniteurs-----");
+        moniteurServices.afficherMoniteurs();
+    }
+
+    public int calculerSalaire(int cin) {
+        return moniteurServices.calculerSalaire(cin);
     }
 }

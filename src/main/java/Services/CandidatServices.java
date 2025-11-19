@@ -20,9 +20,12 @@ public class CandidatServices {
 
     public void afficherLesCandidats(){
         List<Candidat> candidats = candidatRepositories.getAllCandidats();
-
-        for (Candidat candidat : candidats) {
-            System.out.println(candidat.toString());
+        if(candidats.isEmpty()){
+            System.out.println("Les Candidats n'existe pas");
+        }else{
+            for (Candidat candidat : candidats) {
+                System.out.println(candidat.toString());
+            }
         }
     }
 }

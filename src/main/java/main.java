@@ -1,7 +1,7 @@
-import Controllers.CandidatControllers;
-import Controllers.MoniteurControllers;
-import Controllers.VehiculeControllers;
-import Models.Candidat;
+import Controllers.CandidatController;
+import Controllers.MoniteurController;
+import Controllers.SeanceController;
+import Controllers.VehiculeController;
 
 import java.util.Scanner;
 
@@ -17,21 +17,26 @@ public class main {
         System.out.println("1. Candidat");
         System.out.println("2. Moniteur");
         System.out.println("3. Vehicule");
+        System.out.println("4. Seance");
         System.out.println("0. Exit");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         switch (choice) {
             case 1:
-                CandidatControllers candidatControllers = new CandidatControllers();
-                candidatControllers.init();
+                CandidatController candidatController = new CandidatController();
+                candidatController.init();
                 break;
             case 2:
-                MoniteurControllers moniteurControllers = new MoniteurControllers();
-                moniteurControllers.init();
+                MoniteurController moniteurController = new MoniteurController();
+                moniteurController.init();
                 break;
             case 3:
-                VehiculeControllers vehiculeControllers = new VehiculeControllers();
-                vehiculeControllers.init();
+                VehiculeController vehiculeController = new VehiculeController();
+                vehiculeController.init();
+                break;
+            case 4:
+                SeanceController seanceController = new SeanceController();
+                seanceController.init();
                 break;
             case 0:
                 System.out.println("exit");

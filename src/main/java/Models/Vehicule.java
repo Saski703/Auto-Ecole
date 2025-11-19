@@ -54,7 +54,7 @@ public class Vehicule {
     }
 
     public void setMaintenance(List<Maintenance> maintenance) {
-        this.maintenance = maintenance;
+        this.maintenance.addAll(maintenance);
     }
 
     @Override

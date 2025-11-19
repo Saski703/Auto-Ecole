@@ -1,7 +1,7 @@
 package Repositories;
 
 import Models.Moniteur;
-// Import this TypeReference to help Jackson read the List
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -21,7 +21,7 @@ public class MoniteurRepositories {
         this.mapper.registerModule(new JavaTimeModule());
     }
 
-    public void ajoutMoniteur(Moniteur m) {
+    public void save(Moniteur m) {
         List<Moniteur> moniteurs;
         File file = new File(FILE_PATH);
 
@@ -38,7 +38,7 @@ public class MoniteurRepositories {
             mapper.writerWithDefaultPrettyPrinter()
                     .writeValue(file, moniteurs);
 
-            System.out.println("✅ Candidat saved successfully to JSON file!");
+            System.out.println("✅ Moniteur saved successfully to JSON file!");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,17 +61,6 @@ public class MoniteurRepositories {
 
         return moniteurs;
     }
-    public Moniteur rechercheMoniteur(int numCin) {
-        List<Moniteur> allMoniteurs = getAllMoniteurs();
-
-        for (Moniteur moniteur : allMoniteurs) {
-            if (moniteur.getCin() == numCin) {
-                return moniteur;
-            }
-        }
-        return null;
-    }
-
 
     public boolean suppressionMoniteur(int numCin) {
         List<Moniteur> allMoniteurs = getAllMoniteurs();

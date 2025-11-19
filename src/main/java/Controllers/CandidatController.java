@@ -3,7 +3,7 @@ import Models.Candidat;
 import Services.CandidatServices;
 import Ui.CandidatUi;
 
-public class CandidatControllers {
+public class CandidatController {
     CandidatServices candidatServices = new CandidatServices();
     public void init(){
         CandidatUi candidatui = new CandidatUi();

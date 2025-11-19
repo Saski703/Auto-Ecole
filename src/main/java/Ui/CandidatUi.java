@@ -1,6 +1,6 @@
 package Ui;
 
-import Controllers.CandidatControllers;
+import Controllers.CandidatController;
 import Models.Candidat;
 
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class CandidatUi {
 
-    CandidatControllers candidatControllers = new CandidatControllers();
+    CandidatController candidatController = new CandidatController();
 
     public void Menu(){
         System.out.println("-----Menu-----");
@@ -45,7 +45,7 @@ public class CandidatUi {
         Scanner sc = new Scanner(System.in);
         System.out.println("Num Cin");
         int numCin = sc.nextInt();
-        if(candidatControllers.rechercheCandidat(numCin) != null) {
+        if(candidatController.rechercheCandidat(numCin) != null) {
             System.out.println("Un Candidat with this NumCin already exists.");
             return;
         }
@@ -61,7 +61,7 @@ public class CandidatUi {
         String permis = sc.next();
 
         Candidat c = new Candidat(numCin, nom, prenom, adresse, telephone, permis);
-        candidatControllers.ajoutCandidat(c);
+        candidatController.ajoutCandidat(c);
     }
 
     public void modifierCandidat(){
@@ -69,7 +69,7 @@ public class CandidatUi {
         Scanner sc = new Scanner(System.in);
         System.out.println("Num Cin :");
         int numCin = sc.nextInt();
-        Candidat c = candidatControllers.rechercheCandidat(numCin);
+        Candidat c = candidatController.rechercheCandidat(numCin);
 
 
         if(c!=null){
@@ -116,8 +116,8 @@ public class CandidatUi {
 
             Candidat c1 = new Candidat(numCin, name, prenom, date,  adresse, telephone, permis);
 
-            candidatControllers.suppressionCandidat(c.getNumCin());
-            candidatControllers.ajoutCandidat(c1);
+            candidatController.suppressionCandidat(c.getNumCin());
+            candidatController.ajoutCandidat(c1);
 
         }else {
             System.out.println("Candidat inexistant");
@@ -131,7 +131,7 @@ public class CandidatUi {
         Scanner sc = new Scanner(System.in);
         System.out.println("Num Cin :");
         int numCin = sc.nextInt();
-        boolean v =  candidatControllers.suppressionCandidat(numCin);
+        boolean v =  candidatController.suppressionCandidat(numCin);
         if(v){
             System.out.println("Candidat supprimer");
         }else {
@@ -146,7 +146,7 @@ public class CandidatUi {
         Scanner sc = new Scanner(System.in);
         System.out.println("Num Cin :");
         int numCin = sc.nextInt();
-        Candidat c = candidatControllers.rechercheCandidat(numCin);
+        Candidat c = candidatController.rechercheCandidat(numCin);
         if(c!=null){
             System.out.println(c.toString());
         }else {
@@ -157,7 +157,7 @@ public class CandidatUi {
 
     public void afficherLesCandidats() {
         System.out.println("-----Afficher les Condidats-----");
-        candidatControllers.afficherLesCandidats();
+        candidatController.afficherLesCandidats();
     }
 
 }

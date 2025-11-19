@@ -1,16 +1,18 @@
 package Ui;
 
-import Controllers.VehiculeControllers;
+import Controllers.VehiculeController;
+import Models.Maintenance;
 import Models.Vehicule;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class VehiculeUi {
 
-    VehiculeControllers vehiculeControllers = new VehiculeControllers();
+    VehiculeController vehiculeController = new VehiculeController();
 
 
     public void Menu() {
@@ -22,40 +24,43 @@ public class VehiculeUi {
         System.out.println("5. Afficher Vehicules");
         System.out.println("6. Afficher TABLEAU DE BORD");
         System.out.println("7. Saisir Maintenance");
-        System.out.println("8. Quitter");
+        System.out.println("8. Afficher L'historique des Maintenances");
+        System.out.println("9. Quitter");
 
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         switch (choice) {
             case 1:
                 ajoutVehicule();
-                Menu(); // Show menu again
                 break;
             case 2:
                 modifierVehicule();
-                Menu(); // Show menu again
                 break;
             case 3:
                 suppressionVehicule();
-                Menu(); // Show menu again
                 break;
             case 4:
                 rechercherVehicule();
-                Menu();
                 break;
             case 5:
                 afficherVehicules();
+                break;
             case 6:
                 afficherTableauDeBoard();
+                break;
             case 7:
                 SaisirMaintenance();
-            case 8:
-                System.out.println("Retour au menu principal...");
                 break;
+            case 8:
+                afficherHisMaint();
+                break;
+            case 9:
+                System.out.println("Retour au menu principal...");
+                return;
             default:
                 System.out.println("Invalid choice");
-                Menu();
         }
+        Menu();
 
     }
 
@@ -65,7 +70,7 @@ public class VehiculeUi {
         System.out.println("Matricule:");
         String Mat = sc.next();
 
-        if(vehiculeControllers.rechercherVehicule(Mat) != null) {
+        if(vehiculeController.rechercherVehicule(Mat) != null) {
             System.out.println("Un vehicule with this matricule already exists.");
             return;
         }
@@ -92,7 +97,7 @@ public class VehiculeUi {
         String d4 = sc.next();
         LocalDate dateVidange = LocalDate.parse(d4);
         Vehicule v = new Vehicule(Mat, type,date, age, kmTotale, dateVignette, dateAssurance, dateVisiteTechnique, dateVidange);
-        vehiculeControllers.ajoutVehicule(v);
+        vehiculeController.ajoutVehicule(v);
     }
 
     public void modifierVehicule() {
@@ -102,7 +107,7 @@ public class VehiculeUi {
         System.out.println("Matricule du vehicule à modifier:");
         String Mat = sc.next();  // Matricule is String in your Vehicule class
 
-        Vehicule v = vehiculeControllers.rechercherVehicule(Mat);
+        Vehicule v = vehiculeController.rechercherVehicule(Mat);
 
         if (v != null) {
             System.out.println("Vehicule trouvé: " + v.toString());
@@ -180,8 +185,8 @@ public class VehiculeUi {
                     dateVignette, dateAssurance, dateVisiteTechnique, dateVidange);
 
             // Replace old object
-            vehiculeControllers.suppressionVehicule(v.getMat());
-            vehiculeControllers.ajoutVehicule(vUpdated);
+            vehiculeController.suppressionVehicule(v.getMat());
+            vehiculeController.ajoutVehicule(vUpdated);
 
             System.out.println("Vehicule modifié.");
 
@@ -196,7 +201,7 @@ public class VehiculeUi {
         Scanner sc = new Scanner(System.in);
         System.out.println("Matricule:");
         String Mat = sc.next();
-        boolean v = vehiculeControllers.suppressionVehicule(Mat);
+        boolean v = vehiculeController.suppressionVehicule(Mat);
         if (v) {
             System.out.println("Vehicule supprimé");
         } else {
@@ -210,7 +215,7 @@ public class VehiculeUi {
         Scanner sc = new Scanner(System.in);
         System.out.println("Matricule:");
         String Mat = sc.next();
-        Vehicule v = vehiculeControllers.rechercherVehicule(Mat);
+        Vehicule v = vehiculeController.rechercherVehicule(Mat);
         if (v != null) {
             System.out.println(v.toString());
         } else {
@@ -221,12 +226,12 @@ public class VehiculeUi {
 
     public void afficherVehicules(){
         System.out.println("-----Afficher les Vehicules-----");
-        vehiculeControllers.afficherVehicules();
+        vehiculeController.afficherVehicules();
     }
 
     public void afficherTableauDeBoard(){
         System.out.println("-----Afficher les Tableau de Board-----");
-        List<String> alertes = vehiculeControllers.getAlertes();
+        List<String> alertes = vehiculeController.getAlertes();
         if (alertes.isEmpty()) {
             System.out.println("\n   TOUT EST EN ORDRE.");
             System.out.println("    Aucune maintenance ni papier administratif requis.\n");
@@ -238,7 +243,55 @@ public class VehiculeUi {
     }
 
     public void SaisirMaintenance(){
-        //TODO;
+        System.out.println("------------Ajouter Des Maintenances:-------------");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Matricule du vehicule:");
+        String Mat = sc.next();
+        Vehicule v = vehiculeController.rechercherVehicule(Mat);
+        if (v != null) {
+            List<Maintenance> listM = new ArrayList<>();
+            String addMore;
+            do {
+                System.out.println("Nouveau Maintenance : ");
+
+                System.out.println("Description: ");
+                String description = sc.next();
+                System.out.println("date");
+                String d = sc.next();
+                LocalDate date = LocalDate.parse(d);
+
+                Maintenance m = new Maintenance(description, date);
+                listM.add(m);
+                System.out.println("ADD More?(y/n)");
+                addMore = sc.next();
+            }while (Objects.equals(addMore, "y"));
+
+            v.setMaintenance(listM);
+            //todo
+            vehiculeController.suppressionVehicule(v.getMat());
+            vehiculeController.ajoutVehicule(v);
+        } else {
+            System.out.println("Vehicule inexistant");
+        }
+    }
+    public void afficherHisMaint(){
+        System.out.println("Afficher les Maintenances");
+        System.out.println("====================");
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("    Matricule du vehicule:");
+        String Mat = sc.next();
+        Vehicule v = vehiculeController.rechercherVehicule(Mat);
+
+        if (v != null) {
+            for(Maintenance m : v.getMaintenance()){
+                System.out.println(m.toString());
+            }
+        } else {
+            System.out.println("Vehicule inexistant");
+        }
+
+        System.out.println("====================");
     }
 
 }

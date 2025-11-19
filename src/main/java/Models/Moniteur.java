@@ -5,14 +5,13 @@ public class Moniteur {
     private String nom;
     private String prenom;
     private boolean etat;
-    private double prixCode;
+    private double prixCode;  //salaire d'une seance de code
     private double prixConduit;
     private int nbHeureCode;
     private int nbHeureConduit;
 
-    // Default constructor for Jackson
-    public Moniteur() {
-    }
+    // --------------------Constructeurs--------------------
+    public Moniteur() {}
 
     public Moniteur(int cin, String nom, String prenom, boolean etat, double prixCode, double prixConduit, int nbHeureCode, int nbHeureConduit) {
         this.cin = cin;
@@ -24,7 +23,15 @@ public class Moniteur {
         this.nbHeureCode = nbHeureCode;
         this.nbHeureConduit = nbHeureConduit;
     }
-
+    public Moniteur(int cin, String nom, String prenom, boolean etat, double prixCode, double prixConduit) {
+        this.cin = cin;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.etat = etat;
+        this.prixCode = prixCode;
+        this.prixConduit = prixConduit;
+    }
+    // -------------------- Getter and Setters --------------------
     public int getCin() {
         return this.cin;
     }
@@ -88,10 +95,13 @@ public class Moniteur {
         this.nbHeureConduit = nbHeureConduit;
     }
 
+    //todo : salaire??
+    /*
     public double salaire() {
         return (nbHeureCode * prixCode) + (nbHeureConduit * prixConduit);
-    }
+    }*/
 
+    // --------------------toString--------------------
     @Override
     public String toString() {
         return "Moniteur{" +
@@ -100,8 +110,8 @@ public class Moniteur {
                 ", prixCode=" + prixCode +
                 ", prixConduit=" + prixConduit +
                 ", nbHeureCode=" + nbHeureCode +
-                ", nbHeureConduit=" + nbHeureConduit +
-                ", salaire=" + salaire() +
+                ", nbHeureConduit=" + nbHeureConduit +/*
+                ", salaire=" + salaire() +*/
                 '}';
     }
 }

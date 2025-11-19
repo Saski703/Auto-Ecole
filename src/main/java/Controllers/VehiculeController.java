@@ -1,13 +1,11 @@
 package Controllers;
 import Models.Vehicule;
 import Services.VehiculeServices;
-import Ui.CandidatUi;
 import Ui.VehiculeUi;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class VehiculeControllers {
+public class VehiculeController {
     VehiculeServices vehiculeServices = new VehiculeServices();
     public void init(){
         VehiculeUi vehiculeUi = new VehiculeUi();

@@ -5,14 +5,18 @@ import java.time.LocalDate;
 public class Maintenance {
     private String description;       // Ex: "Changement plaquettes freins"
     private LocalDate date;           // Date de la réparation
-    //private double montant;  Coût (pour le module comptabilité F5)
-    //private String cheminPreuve;      // Chemin du fichier scanné (ex: "C:/scans/facture1.jpg")
+    //private double montant;  Coût (pour le module comptabilité F5) //todo
+    //private String cheminPreuve;      // Chemin du fichier scanné (ex: "C:/scans/facture1.jpg")//todo
 
     public Maintenance() {}
 
     public Maintenance(String description, LocalDate date) {
         this.description = description;
         this.date = date;
+    }
+    public Maintenance(String description) {
+        this.description = description;
+        this.date = LocalDate.now();
     }
 
     // Getters & Setters
