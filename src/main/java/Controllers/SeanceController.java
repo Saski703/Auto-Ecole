@@ -5,6 +5,8 @@ import Services.SeanceServices;
 import Ui.MoniteurUi;
 import Ui.SeanceUi;
 
+import java.util.List;
+
 public class SeanceController {
     SeanceServices seanceServices =  new SeanceServices();
 
@@ -27,5 +29,9 @@ public class SeanceController {
 
     public boolean suppressionSeance(int num){
         return seanceServices.suppressionSeance(num);
+    }
+
+    public List<Seance> getAllSeances(){
+        return seanceServices.getAllSeances();
     }
 }

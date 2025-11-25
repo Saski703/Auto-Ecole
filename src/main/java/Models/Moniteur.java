@@ -105,7 +105,8 @@ public class Moniteur {
     @Override
     public String toString() {
         return "Moniteur{" +
-                "nom='" + nom + '\'' +
+                "cin=" + cin +
+                ", nom='" + nom + '\'' +
                 ", etat=" + (etat ? "Actif" : "Inactif") + // More readable output
                 ", prixCode=" + prixCode +
                 ", prixConduit=" + prixConduit +

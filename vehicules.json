@@ -9,4 +9,29 @@
   "kmTotale" : 5000.0,
   "maintenance" : [ ],
   "mat" : "1515TUN2020"
+}, {
+  "type" : "aaaaa",
+  "date" : [ 2015, 11, 11 ],
+  "dateVignette" : [ 2025, 11, 23 ],
+  "dateAssurance" : [ 2025, 11, 24 ],
+  "dateVisiteTechnique" : [ 2025, 12, 1 ],
+  "dateVidange" : [ 2025, 12, 12 ],
+  "age" : 1,
+  "kmTotale" : 112212.0,
+  "maintenance" : [ ],
+  "mat" : "15551"
+}, {
+  "type" : "voiture",
+  "date" : [ 2020, 5, 5 ],
+  "dateVignette" : [ 2027, 11, 11 ],
+  "dateAssurance" : [ 2028, 12, 1 ],
+  "dateVisiteTechnique" : [ 2029, 3, 3 ],
+  "dateVidange" : [ 2030, 3, 2 ],
+  "age" : 5,
+  "kmTotale" : 50000.0,
+  "maintenance" : [ {
+    "description" : "\"aeaee\"",
+    "date" : [ 2025, 2, 5 ]
+  } ],
+  "mat" : "211TUN1515"
 } ]

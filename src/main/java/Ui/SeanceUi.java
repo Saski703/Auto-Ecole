@@ -34,7 +34,7 @@ public class SeanceUi {
             case 1: ajoutSeance(); Menu(); break;
             case 2: suppressionSeance(); Menu(); break;
             case 3: afficherSeances(); Menu(); break;
-            //case 4: afficherPlanningSemaine(); Menu(); break;
+            case 4: afficherPlanningSemaine(); Menu(); break;
             case 5: System.out.println("Retour..."); break;
             default: Menu();
         }
@@ -98,7 +98,7 @@ public class SeanceUi {
         System.out.println("Seance ajoutee");
     }
 
-    /*public void afficherPlanningSemaine() {
+    public void afficherPlanningSemaine() {
         System.out.println("----- PLANNING DE LA SEMAINE -----");
         Scanner sc = new Scanner(System.in);
         System.out.println("Date de référence (yyyy-MM-dd):");
@@ -109,8 +109,8 @@ public class SeanceUi {
 
         System.out.println("Semaine du " + start + " au " + end);
         System.out.println("-------------------------------------------------------------------------");
-        System.out.printf("%-12s %-8s %-10s %-15s %-15s %-15s\n",
-                "DATE", "HEURE", "TYPE", "MONITEUR", "VEHICULE", "CANDIDAT");
+        System.out.printf("%-12s %-8s %-10s %-15s %-15s\n",// %-15s\n",
+                "DATE", "HEURE", "TYPE", "MONITEUR", "VEHICULE");//, "CANDIDAT");
         System.out.println("-------------------------------------------------------------------------");
 
         for (Seance s : seanceController.getAllSeances()) {
@@ -118,22 +118,22 @@ public class SeanceUi {
 
                 String vehiculeInfo = "---";
                 // Check if it is a Driving session to get the car
-                if (s instanceof SeanceConduite) {
-                    vehiculeInfo = ((SeanceConduite) s).getVehicule().getMat();
+                if (s instanceof SeanceConduit) {
+                    vehiculeInfo = ((SeanceConduit) s).getVehicule().getMat();
                 }
 
-                System.out.printf("%-12s %-8s %-10s %-15s %-15s %-15s\n",
+                System.out.printf("%-12s %-8s %-10s %-15s  %-15s\n",
                         s.getDate(),
                         s.getHeure(),
                         s.getType(), // returns "Code" or "Conduite"
                         s.getMoniteur().getNom(),
-                        vehiculeInfo,
-                        (s.getCandidat() != null ? s.getCandidat().getNom() : "N/A")
+                        vehiculeInfo//,
+                        //(s.getCandidat() != null ? s.getCandidat().getNom() : "N/A")
                 );
             }
         }
         System.out.println("-------------------------------------------------------------------------");
-    }*/
+    }
 
     public void afficherSeances() {
         System.out.println("-------- afficher les seances ------");

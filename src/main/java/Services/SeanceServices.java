@@ -38,4 +38,8 @@ public class SeanceServices {
     public boolean suppressionSeance(int num){
         return seanceRepositories.suppressionSeance(num);
     }
+
+    public List<Seance> getAllSeances(){
+        return seanceRepositories.getAllSeances();
+    }
 }

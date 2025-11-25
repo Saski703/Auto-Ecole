@@ -1,13 +1,20 @@
 package Ui;
 
 import Controllers.MoniteurController;
+import Controllers.SeanceController;
 import Models.Moniteur;
+import Models.Seance;
+import Models.SeanceConduit;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Scanner;
 
 public class MoniteurUi {
     //TODO : Scanner close and Scanner repetetion
     MoniteurController moniteurController = new MoniteurController();
+    SeanceController seanceController = new SeanceController();
 
     // -------------------- Menu -------------------
     public void Menu() {
@@ -18,7 +25,8 @@ public class MoniteurUi {
         System.out.println("    4. Modifier Moniteur");
         System.out.println("    5. Affichers tous les moniteurs");
         System.out.println("    6. Calculer le salaire d'un moniteur");
-        System.out.println("    7. Quitter");
+        System.out.println("    7. Afficher planning(semaine)");
+        System.out.println("    8. Quitter");
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Veuillez entrer un nombre.");
@@ -42,7 +50,11 @@ public class MoniteurUi {
                 break;
             case 6:
                 calculerSalaire();
+                break;
             case 7:
+                afficherPlanningMoniteur();
+                break;
+            case 8:
                 System.out.println("Retour au menu principal...");
                 return;
             default:
@@ -203,5 +215,49 @@ public class MoniteurUi {
         }
         else
             System.out.println("Moniteur introuvable.");
+    }
+
+    //----------------------Planning Moniteur/Semaine----------------
+    public void afficherPlanningMoniteur() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("CIN du moniteur :");
+        int cin = sc.nextInt();
+        Moniteur m = moniteurController.rechercheMoniteur(cin);
+        if (m == null){
+            System.out.println("Moniteur introuvable.");
+            return;
+        }
+        System.out.println("Date de référence (yyyy-MM-dd) :");
+        LocalDate refDate = LocalDate.parse(sc.next());
+
+        // Affichage de l'en-tête du planning
+        LocalDate start = refDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate end = refDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        System.out.println("Planning de la semaine pour le moniteur " + cin + " du " + start + " au " + end);
+        System.out.println("-------------------------------------------------------------");
+        System.out.printf("%-12s %-8s %-10s %-15s\n",//%-15s
+                "DATE", "HEURE", "TYPE", "VEHICULE");//, "CANDIDAT");
+        System.out.println("-------------------------------------------------------------");
+
+        for (Seance seance : seanceController.getAllSeances()) {
+            if (seance.getMoniteur().getCin() == m.getCin()  &&
+                    !seance.getDate().isBefore(start) &&
+                    !seance.getDate().isAfter(end)) {
+
+                String vehiculeInfo = "---";
+                // Check if it is a Driving session to get the car
+                if (seance instanceof SeanceConduit) {
+                    vehiculeInfo = ((SeanceConduit) seance).getVehicule().getMat();
+                }
+                System.out.printf("%-12s %-8s %-10s %-15s\n",//%-15s
+                        seance.getDate(),
+                        seance.getHeure(),
+                        seance.getType(),
+                        vehiculeInfo);
+
+            }
+        }
+
     }
 }

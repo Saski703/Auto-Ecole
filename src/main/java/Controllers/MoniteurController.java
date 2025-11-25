@@ -1,8 +1,12 @@
 package Controllers;
 
 import Models.Moniteur;
+import Models.Seance;
 import Services.MoniteurServices;
 import Ui.MoniteurUi;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public class MoniteurController {
 
@@ -26,11 +30,11 @@ public class MoniteurController {
     }
 
     public void afficherMoniteurs() {
-        System.out.println("-----Afficher Moniteurs-----");
         moniteurServices.afficherMoniteurs();
     }
 
     public int calculerSalaire(int cin) {
         return moniteurServices.calculerSalaire(cin);
     }
+
 }
