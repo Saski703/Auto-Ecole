@@ -94,15 +94,24 @@ public class Candidat {
 
     @Override
     public String toString() {
-        return "Candidat{" +
-                "numCin=" + numCin +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", date=" + date +
-                ", adresse='" + adresse + '\'' +
-                ", telephone=" + telephone +
-                ", typePermis=" + typePermis + '\'' +
-                '}';
+        return """
+           Candidat Details
+           ----------------
+           CIN         : %s
+           Nom Complet : %s %s
+           Telephone   : %s
+           Adresse     : %s
+           Date Naiss. : %s
+           Type Permis : %s
+           """.formatted(
+                numCin,
+                (nom != null ? nom.toUpperCase() : ""), // Modern touch: Uppercase Last Name
+                (prenom != null ? prenom : ""),
+                telephone,
+                (adresse != null ? adresse : "N/A"),
+                (date != null ? date : "N/A"),
+                (typePermis != null ? typePermis : "N/A")
+        );
     }
 
 }

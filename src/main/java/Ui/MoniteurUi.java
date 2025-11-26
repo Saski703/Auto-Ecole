@@ -12,252 +12,211 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Scanner;
 
 public class MoniteurUi {
-    //TODO : Scanner close and Scanner repetetion
     MoniteurController moniteurController = new MoniteurController();
     SeanceController seanceController = new SeanceController();
 
     // -------------------- Menu -------------------
     public void Menu() {
-        System.out.println("-----Menu Moniteur-----");
-        System.out.println("    1. Ajout Moniteur");
-        System.out.println("    2. Supprimer Moniteur");
-        System.out.println("    3. Rechercher Moniteur");
-        System.out.println("    4. Modifier Moniteur");
-        System.out.println("    5. Affichers tous les moniteurs");
-        System.out.println("    6. Calculer le salaire d'un moniteur");
-        System.out.println("    7. Afficher planning(semaine)");
-        System.out.println("    8. Quitter");
+        System.out.println("========================================");
+        System.out.println("        🧑‍🏫 MENU MONITEUR - SYSTEME        ");
+        System.out.println("========================================");
+        System.out.println("[1] ▶ Ajouter un moniteur");
+        System.out.println("[2] ▶ Supprimer un moniteur");
+        System.out.println("[3] ▶ Rechercher un moniteur");
+        System.out.println("[4] ▶ Modifier un moniteur");
+        System.out.println("[5] ▶ Afficher tous les moniteurs");
+        System.out.println("[6] ▶ Calculer le salaire d'un moniteur");
+        System.out.println("[7] ▶ Afficher planning (semaine)");
+        System.out.println("[8] ▶ Retour");
+        System.out.println("----------------------------------------");
+        System.out.print("👉 Votre choix : ");
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Veuillez entrer un nombre.");
         int choice = sc.nextInt();
 
         switch (choice) {
-            case 1:
-                ajoutMoniteur();
-                break;
-            case 2:
-                suppressionMoniteur();
-                break;
-            case 3:
-                rechercheMoniteur();
-                break;
-            case 4:
-                modifierMoniteur();
-                break;
-            case 5:
-                afficherMoniteurs();
-                break;
-            case 6:
-                calculerSalaire();
-                break;
-            case 7:
-                afficherPlanningMoniteur();
-                break;
+            case 1: ajoutMoniteur(); break;
+            case 2: suppressionMoniteur(); break;
+            case 3: rechercheMoniteur(); break;
+            case 4: modifierMoniteur(); break;
+            case 5: afficherMoniteurs(); break;
+            case 6: calculerSalaire(); break;
+            case 7: afficherPlanningMoniteur(); break;
             case 8:
-                System.out.println("Retour au menu principal...");
+                System.out.println("👋 Retour au menu principal...");
                 return;
             default:
-                System.out.println("Choix invalide, veuillez réessayer.");
+                System.out.println("❌ Choix invalide, veuillez réessayer.");
         }
         Menu();
-
     }
 
     // ----------------------- AJOUT -----------------------
     public void ajoutMoniteur() {
-        System.out.println("-----Ajout Moniteur-----");
+        System.out.println("===== ➕ AJOUT MONITEUR =====");
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("    CIN :");
+        System.out.print("CIN : ");
         int cin = sc.nextInt();
-        if(moniteurController.rechercheMoniteur(cin) != null) {
-            System.out.println("Ce numéro cin existe déjà.");
+        if (moniteurController.rechercheMoniteur(cin) != null) {
+            System.out.println("❌ Ce numéro CIN existe déjà.");
             return;
         }
-        System.out.println("    Nom :");
+
+        System.out.print("Nom : ");
         String nom = sc.next();
-
-        System.out.println("    Prenom :");
+        System.out.print("Prénom : ");
         String prenom = sc.next();
-
-        System.out.println("    État de disponibilité (true/false) :");
-        boolean etat = sc.nextBoolean();
-
-        System.out.println("    Prix Code :");
+        System.out.print("Prix code : ");
         double prixCode = sc.nextDouble();
-
-        System.out.println("    Prix Conduit :");
+        System.out.print("Prix conduite : ");
         double prixConduit = sc.nextDouble();
 
-        System.out.println("    Nombre d’heures Code :");
-        int nbHCode = sc.nextInt();
-
-        System.out.println("    Nombre d’heures Conduit :");
-        int nbHConduit = sc.nextInt();
-
-        Moniteur m = new Moniteur(cin, nom, prenom, etat, prixCode, prixConduit, nbHCode, nbHConduit);
+        Moniteur m = new Moniteur(cin, nom, prenom, prixCode, prixConduit);
         moniteurController.ajoutMoniteur(m);
-
-        System.out.println("Moniteur ajouté avec succès !");
-
+        System.out.println("✔ Moniteur ajouté avec succès !");
     }
 
     // ----------------------- MODIFIER -----------------------
     public void modifierMoniteur() {
-        System.out.println("-----Modifier Moniteur-----");
+        System.out.println("===== ✏ MODIFIER MONITEUR =====");
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("CIN du moniteur :");
+        System.out.print("CIN du moniteur : ");
         int cin = sc.nextInt();
-
         Moniteur m = moniteurController.rechercheMoniteur(cin);
 
         if (m != null) {
-
-            System.out.println(m.toString());
-
+            System.out.println(m);
             String nom = m.getNom();
             String prenom = m.getPrenom();
-            boolean etat = m.getEtat();
             double prixCode = m.getPrixCode();
             double prixConduit = m.getPrixConduit();
 
-            System.out.println("Modifier nom ? (y/n)");
+            System.out.print("Modifier nom ? (y/n) ");
             if (sc.next().equals("y")) {
-                System.out.println("Nouveau nom :");
+                System.out.print("Nouveau nom : ");
                 nom = sc.next();
             }
 
-            System.out.println("Modifier prenom ? (y/n)");
+            System.out.print("Modifier prénom ? (y/n) ");
             if (sc.next().equals("y")) {
-                System.out.println("Nouveau prénom :");
+                System.out.print("Nouveau prénom : ");
                 prenom = sc.next();
             }
 
-            System.out.println("Modifier disponibilité ? (y/n)");
+            System.out.print("Modifier prix code ? (y/n) ");
             if (sc.next().equals("y")) {
-                System.out.println("Nouvel état (true/false) :");
-                etat = sc.nextBoolean();
-            }
-
-            System.out.println("Modifier prix code ? (y/n)");
-            if (sc.next().equals("y")) {
-                System.out.println("Nouveau prix code :");
+                System.out.print("Nouveau prix : ");
                 prixCode = sc.nextDouble();
             }
 
-            System.out.println("Modifier prix conduit ? (y/n)");
+            System.out.print("Modifier prix conduite ? (y/n) ");
             if (sc.next().equals("y")) {
-                System.out.println("Nouveau prix conduit :");
+                System.out.print("Nouveau prix : ");
                 prixConduit = sc.nextDouble();
             }
 
-            Moniteur m1 = new Moniteur(cin, nom, prenom, etat, prixCode, prixConduit);
+            Moniteur m1 = new Moniteur(cin, nom, prenom, prixCode, prixConduit);
             moniteurController.suppressionMoniteur(cin);
             moniteurController.ajoutMoniteur(m1);
-            System.out.println("Modification effectuée avec succès.");
+            System.out.println("✔ Modification effectuée avec succès !");
 
         } else {
-            System.out.println("Moniteur introuvable.");
+            System.out.println("❌ Moniteur introuvable.");
         }
-
     }
+
     // ----------------------- SUPPRESSION -----------------------
     public void suppressionMoniteur() {
-        System.out.println("-----Supprimer Moniteur-----");
+        System.out.println("===== 🗑 SUPPRESSION MONITEUR =====");
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("CIN :");
+        System.out.print("CIN : ");
         int cin = sc.nextInt();
 
         boolean v = moniteurController.suppressionMoniteur(cin);
 
-        if (v)
-            System.out.println("Moniteur supprimé.");
-        else
-            System.out.println("Moniteur introuvable.");
-
+        System.out.println(v ? "✔ Moniteur supprimé." : "❌ Moniteur introuvable.");
     }
 
     // ----------------------- RECHERCHE -----------------------
     public void rechercheMoniteur() {
-        System.out.println("-----Rechercher Moniteur-----");
+        System.out.println("===== 🔍 RECHERCHER MONITEUR =====");
         Scanner sc = new Scanner(System.in);
-        System.out.println("CIN :");
+
+        System.out.print("CIN : ");
         int cin = sc.nextInt();
 
         Moniteur m = moniteurController.rechercheMoniteur(cin);
 
-        if (m != null)
-            System.out.println(m.toString());
-        else
-            System.out.println("Moniteur introuvable.");
-
+        System.out.println(m != null ? m : "❌ Moniteur introuvable.");
     }
 
     // -------------------- Afficher Tous--------------------
     public void afficherMoniteurs() {
-        System.out.println("-----Afficher Moniteurs-----");
+        System.out.println("===== 📋 LISTE DES MONITEURS =====");
         moniteurController.afficherMoniteurs();
     }
 
     // -------------------- Calcule de Salaire--------------------
     public void calculerSalaire() {
-        System.out.println("-----Calculer Salaire-----");
+        System.out.println("===== 💰 CALCUL SALAIRE =====");
         Scanner sc = new Scanner(System.in);
-        System.out.println("CIN :");
+
+        System.out.print("CIN : ");
         int cin = sc.nextInt();
 
-        double s = moniteurController.calculerSalaire(cin);
-        if(s != -1) {
-            System.out.println("Le salaire est  :" + s);
-        }
-        else
-            System.out.println("Moniteur introuvable.");
+        System.out.print("Mois (1-12): ");
+        int mois = sc.nextInt();
+        System.out.print("Année (ex: 2025): ");
+        int annee = sc.nextInt();
+
+        double s = moniteurController.calculerSalaire(cin, annee, mois);
+        System.out.println(s != -1 ? "Salaire : " + s : "❌ Moniteur introuvable.");
     }
 
     //----------------------Planning Moniteur/Semaine----------------
     public void afficherPlanningMoniteur() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("CIN du moniteur :");
+        System.out.println("===== 🗓 PLANNING MONITEUR =====");
+
+        System.out.print("CIN : ");
         int cin = sc.nextInt();
         Moniteur m = moniteurController.rechercheMoniteur(cin);
-        if (m == null){
-            System.out.println("Moniteur introuvable.");
+
+        if (m == null) {
+            System.out.println("❌ Moniteur introuvable.");
             return;
         }
-        System.out.println("Date de référence (yyyy-MM-dd) :");
+
+        System.out.print("Date référence (yyyy-MM-dd) : ");
         LocalDate refDate = LocalDate.parse(sc.next());
 
-        // Affichage de l'en-tête du planning
         LocalDate start = refDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate end = refDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
 
-        System.out.println("Planning de la semaine pour le moniteur " + cin + " du " + start + " au " + end);
-        System.out.println("-------------------------------------------------------------");
-        System.out.printf("%-12s %-8s %-10s %-15s\n",//%-15s
-                "DATE", "HEURE", "TYPE", "VEHICULE");//, "CANDIDAT");
-        System.out.println("-------------------------------------------------------------");
+        System.out.println("Planning du " + start + " au " + end);
+        System.out.println("------------------------------------------------------------");
+        System.out.printf("%-12s %-8s %-10s %-15s\n", "DATE", "HEURE", "TYPE", "VÉHICULE");
+        System.out.println("------------------------------------------------------------");
 
         for (Seance seance : seanceController.getAllSeances()) {
-            if (seance.getMoniteur().getCin() == m.getCin()  &&
+            if (seance.getMoniteur().getCin() == cin &&
                     !seance.getDate().isBefore(start) &&
                     !seance.getDate().isAfter(end)) {
 
                 String vehiculeInfo = "---";
-                // Check if it is a Driving session to get the car
                 if (seance instanceof SeanceConduit) {
                     vehiculeInfo = ((SeanceConduit) seance).getVehicule().getMat();
                 }
-                System.out.printf("%-12s %-8s %-10s %-15s\n",//%-15s
+
+                System.out.printf("%-12s %-8s %-10s %-15s\n",
                         seance.getDate(),
                         seance.getHeure(),
                         seance.getType(),
                         vehiculeInfo);
-
             }
         }
-
     }
 }

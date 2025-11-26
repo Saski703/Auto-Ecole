@@ -17,6 +17,7 @@ public class CandidatUi {
         System.out.println("3.Supprimer Condidat");
         System.out.println("4.Rechercher Condidat");
         System.out.println("5.afficher Les Condidats");
+        System.out.println("6 Exit");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         switch(choice){
@@ -35,6 +36,9 @@ public class CandidatUi {
             case 5:
                 afficherLesCandidats();
                 break;
+            case 6:
+                System.out.println("Exit");
+                return;
             default:
                 System.out.println("Invalid choice");
         }

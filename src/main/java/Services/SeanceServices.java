@@ -5,6 +5,9 @@ import Models.Seance;
 import Models.SeanceCode;
 import Repositories.SeanceRepositories;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class SeanceServices {
@@ -41,5 +44,23 @@ public class SeanceServices {
 
     public List<Seance> getAllSeances(){
         return seanceRepositories.getAllSeances();
+    }
+
+    public boolean isMoniteurDisponible(Moniteur moniteur, LocalDate date, LocalTime heure){
+        List<Seance> allSeances = getAllSeances();
+        for (Seance seance : allSeances) {
+            if (
+                    seance.getMoniteur().getCin() ==  moniteur.getCin() &&
+                    seance.getDate().equals(date)
+            )
+            {
+                long diffMinutes = ChronoUnit.MINUTES.between(seance.getHeure(), heure);
+                if (Math.abs(diffMinutes) < 60) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

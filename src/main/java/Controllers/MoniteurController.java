@@ -33,8 +33,8 @@ public class MoniteurController {
         moniteurServices.afficherMoniteurs();
     }
 
-    public int calculerSalaire(int cin) {
-        return moniteurServices.calculerSalaire(cin);
+    public double calculerSalaire(int cin, int annee, int mois) {
+        return moniteurServices.calculerSalaire(cin, annee, mois);
     }
 
 }

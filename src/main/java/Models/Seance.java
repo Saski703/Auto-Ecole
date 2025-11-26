@@ -20,18 +20,18 @@ public abstract class Seance {
     protected LocalDate date;
     protected LocalTime heure;
     protected Moniteur moniteur;
-    //protected Candidat candidat;
+    protected Candidat candidat;
     protected double prix;
 
     // --------------------Constructeurs--------------------
     public Seance() {}
-    public Seance(int num, LocalDate date, LocalTime heure, Moniteur moniteur, double prix) {
+    public Seance(int num, LocalDate date, LocalTime heure, Moniteur moniteur, Candidat candidat,double prix) {
         this.num = num;
         this.date = date;
         this.heure = heure;
         this.moniteur = moniteur;
+        this.candidat = candidat;
         this.prix = prix;
-        //this.candidat = candidat;
     }
 
     //
@@ -69,13 +69,13 @@ public abstract class Seance {
         this.moniteur = moniteur;
     }
 
-    /*public Candidat getCandidat() {
+    public Candidat getCandidat() {
         return candidat;
     }
 
     public void setCandidat(Candidat candidat) {
         this.candidat = candidat;
-    }*/
+    }
 
     public double getPrix() {
         return prix;
@@ -92,6 +92,7 @@ public abstract class Seance {
                 ", date='" + date + '\'' +
                 ", heure='" + heure + '\'' +
                 ", cinmMoniteur=" + moniteur.getCin() +
+                ", cinmCandidat=" + candidat.getNumCin() +
                 ", prix='" + prix + '\'' +
                 '}';
     }

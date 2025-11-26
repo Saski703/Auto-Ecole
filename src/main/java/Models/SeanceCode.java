@@ -6,19 +6,28 @@ import java.time.LocalTime;
 public class SeanceCode extends Seance{
 
     public SeanceCode() {}
-    public SeanceCode(int num, LocalDate date, LocalTime heure, Moniteur moniteur, double prix) {
-        super(num, date, heure, moniteur, prix);
+    public SeanceCode(int num, LocalDate date, LocalTime heure, Moniteur moniteur, Candidat candidat, double prix) {
+        super(num, date, heure, moniteur, candidat, prix);
     }
 
     @Override
     public String toString() {
-        return "SeanceCode{" +
-                "num=" + num +
-                ", date='" + date + '\'' +
-                ", heure='" + heure + '\'' +
-                ", cinmMoniteur=" + moniteur.getCin() +
-                ", prix='" + prix + '\'' +
-                '}';
+        return """
+           SeanceCode details:
+           ----------------------
+           ID        : %d
+           Date      : %s at %s
+           Prix      : %s
+           Moniteur  : %s
+           Candidat  : %s
+           """.formatted(
+                num,
+                date,
+                heure,
+                prix,
+                (moniteur != null ? moniteur.getCin() : "N/A"),
+                (candidat != null ? candidat.getNumCin() : "N/A")
+        );
     }
 
     @Override public String getType() { return "CODE"; }

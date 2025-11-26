@@ -14,4 +14,12 @@
   "adresse" : "aaan",
   "telephone" : 28143695,
   "typePermis" : "B"
+}, {
+  "numCin" : 11224455,
+  "nom" : "aaaa",
+  "prenom" : "bbbb",
+  "date" : [ 2025, 11, 26 ],
+  "adresse" : "azeeza",
+  "telephone" : 21548736,
+  "typePermis" : "B"
 } ]

@@ -17,7 +17,7 @@ public class SeanceUi {
 
     SeanceController seanceController = new SeanceController();
     MoniteurController moniteurController = new MoniteurController();
-    //CandidatController candidatController = new CandidatController();
+    CandidatController candidatController = new CandidatController();
     VehiculeController vehiculeController = new VehiculeController();
 
     public void Menu() {
@@ -60,23 +60,28 @@ public class SeanceUi {
         System.out.println("Prix:");
         double prix = sc.nextDouble();
 
-        // Link Moniteur
+
         System.out.println("Cin Moniteur:");
         int cin = sc.nextInt();
         Moniteur moniteur = moniteurController.rechercheMoniteur(cin);
-        if (moniteur == null) { System.out.println("Moniteur introuvable"); return; }
+        while (moniteur == null) { System.out.println("Moniteur introuvable"); return; }
+
+        if (!seanceController.isMoniteurDisponible(moniteur, date, heure)) {
+            System.out.println("🚨 CONFLIT: Le moniteur " + moniteur.getNom() + " est déjà occupé ce jour-là à " + heure + " !");
+            return;
+        }
 
         // Link Candidat
-        /*System.out.println("ID Candidat:");
-        String cId = sc.next();
-        Candidat candidat = candidatController.rechercherCandidat(cId);
-        if (candidat == null) { System.out.println("Candidat introuvable"); return; }*/
+        System.out.println("Cin Candidat:");
+        int cinm = sc.nextInt();
+        Candidat candidat = candidatController.rechercheCandidat(cinm);
+        if (candidat == null) { System.out.println("Candidat introuvable"); return; }
 
         Seance seance;
 
         if (typeChoice == 1) {
             // --- CASE 1: SEANCE CODE ---
-            seance = new SeanceCode(num, date, heure, moniteur,prix);
+            seance = new SeanceCode(num, date, heure, moniteur, candidat,prix);
 
         } else if (typeChoice == 2) {
             // --- CASE 2: SEANCE CONDUITE ---
@@ -85,17 +90,16 @@ public class SeanceUi {
             Vehicule v = vehiculeController.rechercherVehicule(Mat);
             if(v == null) { System.out.println("Véhicule introuvable"); return; }
 
-            seance = new SeanceConduit(num, date, heure, moniteur,prix, v);
+            seance = new SeanceConduit(num, date, heure, moniteur, candidat, prix, v);
         } else {
             System.out.println("Type invalide.");
             return;
         }
 
-        // Set common fields and add
         //seance.setCandidat(candidat);
         seanceController.ajoutSeance(seance);
-        //System.out.println("Séance de " + seance.getType() + " ajoutée !");
-        System.out.println("Seance ajoutee");
+        System.out.println("Séance de " + seance.getType() + " ajoutée !");
+        //System.out.println("Seance ajoutee");
     }
 
     public void afficherPlanningSemaine() {
@@ -109,8 +113,8 @@ public class SeanceUi {
 
         System.out.println("Semaine du " + start + " au " + end);
         System.out.println("-------------------------------------------------------------------------");
-        System.out.printf("%-12s %-8s %-10s %-15s %-15s\n",// %-15s\n",
-                "DATE", "HEURE", "TYPE", "MONITEUR", "VEHICULE");//, "CANDIDAT");
+        System.out.printf("%-12s %-8s %-10s %-15s %-15s %-15s\n",
+                "DATE", "HEURE", "TYPE", "MONITEUR", "VEHICULE", "CANDIDAT");
         System.out.println("-------------------------------------------------------------------------");
 
         for (Seance s : seanceController.getAllSeances()) {
@@ -127,8 +131,8 @@ public class SeanceUi {
                         s.getHeure(),
                         s.getType(), // returns "Code" or "Conduite"
                         s.getMoniteur().getNom(),
-                        vehiculeInfo//,
-                        //(s.getCandidat() != null ? s.getCandidat().getNom() : "N/A")
+                        vehiculeInfo,
+                        s.getCandidat().getNom()
                 );
             }
         }

@@ -7,8 +7,8 @@ public class SeanceConduit extends Seance{
     private Vehicule vehicule;
 
     public SeanceConduit() {}
-    public SeanceConduit(int num, LocalDate date, LocalTime heure, Moniteur moniteur, double prix, Vehicule vehicule) {
-        super(num, date, heure, moniteur, prix);
+    public SeanceConduit(int num, LocalDate date, LocalTime heure, Moniteur moniteur, Candidat candidat, double prix, Vehicule vehicule) {
+        super(num, date, heure, moniteur, candidat, prix);
         this.vehicule = vehicule;
     }
 
@@ -22,14 +22,24 @@ public class SeanceConduit extends Seance{
 
     @Override
     public String toString() {
-        return "SeanceConduit{" +
-                "num=" + num +
-                ", date='" + date + '\'' +
-                ", heure='" + heure + '\'' +
-                ", cinmMoniteur=" + moniteur.getCin() +
-                ", prix='" + prix + '\'' +
-                ", vehiculeMat=" + vehicule.getMat() +
-                '}';
+        return """
+           SeanceConduit details:
+           ----------------------
+           ID        : %d
+           Date      : %s at %s
+           Prix      : %s
+           Moniteur  : %s
+           Candidat  : %s
+           Vehicule  : %s
+           """.formatted(
+                num,
+                date,
+                heure,
+                prix,
+                (moniteur != null ? moniteur.getCin() : "N/A"),
+                (candidat != null ? candidat.getNumCin() : "N/A"),
+                (vehicule != null ? vehicule.getMat() : "N/A")
+        );
     }
 
     @Override public String getType() { return "CONDUITE"; }
