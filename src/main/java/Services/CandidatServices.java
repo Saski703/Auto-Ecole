@@ -28,4 +28,10 @@ public class CandidatServices {
             }
         }
     }
+
+    public void modifierCandidat(Candidat c) {
+        candidatRepositories.modifierCandidat(c);
+    }
+
+
 }

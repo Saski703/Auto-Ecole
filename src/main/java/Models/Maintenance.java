@@ -5,14 +5,15 @@ import java.time.LocalDate;
 public class Maintenance {
     private String description;       // Ex: "Changement plaquettes freins"
     private LocalDate date;           // Date de la réparation
-    //private double montant;  Coût (pour le module comptabilité F5) //todo
+    private double montant;
     //private String cheminPreuve;      // Chemin du fichier scanné (ex: "C:/scans/facture1.jpg")//todo
 
     public Maintenance() {}
 
-    public Maintenance(String description, LocalDate date) {
+    public Maintenance(String description, LocalDate date, double montant) {
         this.description = description;
         this.date = date;
+        this.montant = montant;
     }
     public Maintenance(String description) {
         this.description = description;
@@ -25,6 +26,14 @@ public class Maintenance {
 
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }
+
+    public double getMontant() {
+        return montant;
+    }
+
+    public void setMontant(double montant) {
+        this.montant = montant;
+    }
 
     @Override
     public String toString() {

@@ -31,7 +31,8 @@
   "kmTotale" : 50000.0,
   "maintenance" : [ {
     "description" : "\"aeaee\"",
-    "date" : [ 2025, 2, 5 ]
+    "date" : [ 2025, 2, 5 ],
+    "montant" : 0.0
   } ],
   "mat" : "211TUN1515"
-} ]
+}]

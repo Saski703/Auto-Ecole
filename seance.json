@@ -1,0 +1,26 @@
+[ {
+  "num" : 1,
+  "date" : [ 2025, 11, 30 ],
+  "heure" : [ 10, 10 ],
+  "moniteur" : {
+    "cin" : 11447788,
+    "nom" : "aaaa",
+    "prenom" : "bbbb",
+    "prixCode" : 20.0,
+    "prixConduit" : 20.0
+  },
+  "candidat" : {
+    "numCin" : 11472828,
+    "nom" : "Malek",
+    "prenom" : "hichri",
+    "date" : [ 2025, 11, 30 ],
+    "adresse" : "newYork",
+    "telephone" : 28543651,
+    "typePermis" : "B",
+    "total" : 0.0,
+    "paye" : 0.0,
+    "reste" : 0.0
+  },
+  "prix" : 30.0,
+  "type" : "CODE"
+} ]

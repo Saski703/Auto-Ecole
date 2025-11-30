@@ -27,4 +27,8 @@ public class CandidatController {
         candidatServices.afficherLesCandidats();
     }
 
+    public void modifierCandidat(Candidat c) {
+        candidatServices.modifierCandidat(c);
+    }
+
 }

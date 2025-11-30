@@ -1,6 +1,7 @@
 package Repositories;
 
 import Models.Vehicule;
+import Models.Vehicule;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -75,5 +76,34 @@ public class VehiculeRepositories {
             }
         }
         return removed;
+    }
+
+    public void modifierVehicule(Vehicule c) {
+        // 1. Load all vehiculees from the file
+        List<Vehicule> allVehicules = getAllVehicules();
+        boolean found = false;
+
+        // 2. Find the vehiculee in the list and replace it
+        for (int i = 0; i < allVehicules.size(); i++) {
+            if (Objects.equals(allVehicules.get(i).getMat(), c.getMat())) {
+                allVehicules.set(i, c);
+                found = true;
+                break;
+            }
+        }
+
+        // 3. Save the updated list back to the file
+        if (found) {
+            try {
+                mapper.writerWithDefaultPrettyPrinter()
+                        .writeValue(new File(FILE_PATH), allVehicules);
+                System.out.println("✅ Vehicule modified successfully!");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("❌ Error while saving modification!");
+            }
+        } else {
+            System.out.println("❌ Vehicule to modify not found in file.");
+        }
     }
 }

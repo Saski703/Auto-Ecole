@@ -1,6 +1,7 @@
 package Repositories;
 
 import Models.Seance;
+import Models.Seance;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,5 +81,35 @@ public class SeanceRepositories {
             }
         }
         return removed;
+    }
+
+    public void modifierSeance(Seance c) {
+        // 1. Load all seancees from the file
+        List<Seance> allSeances = getAllSeances();
+        boolean found = false;
+
+        // 2. Find the seancee in the list and replace it
+        for (int i = 0; i < allSeances.size(); i++) {
+            if (allSeances.get(i).getNum() == c.getNum()) {
+                // Replace the old object with the modified one
+                allSeances.set(i, c);
+                found = true;
+                break;
+            }
+        }
+
+        // 3. Save the updated list back to the file
+        if (found) {
+            try {
+                mapper.writerWithDefaultPrettyPrinter()
+                        .writeValue(new File(FILE_PATH), allSeances);
+                System.out.println("✅ Seance modified successfully!");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("❌ Error while saving modification!");
+            }
+        } else {
+            System.out.println("❌ Seance to modify not found in file.");
+        }
     }
 }

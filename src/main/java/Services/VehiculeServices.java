@@ -116,4 +116,8 @@ public class VehiculeServices {
         }
 
     }
+
+    public void modifierVehicule(Vehicule s){
+        vehiculeRepos.modifierVehicule(s);
+    }
 }

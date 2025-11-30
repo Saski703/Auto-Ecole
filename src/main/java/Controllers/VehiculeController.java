@@ -1,5 +1,6 @@
 package Controllers;
 import Models.Vehicule;
+import Models.Vehicule;
 import Services.VehiculeServices;
 import Ui.VehiculeUi;
 
@@ -31,5 +32,9 @@ public class VehiculeController {
 
     public void afficherVehicules(){
         vehiculeServices.afficherVehicules();
+    }
+
+    public void modifierVehicule(Vehicule s){
+        vehiculeServices.modifierVehicule(s);
     }
 }

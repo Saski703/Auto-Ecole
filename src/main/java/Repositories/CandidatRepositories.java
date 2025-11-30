@@ -97,4 +97,34 @@ public class CandidatRepositories {
         }
         return removed;
     }
+    public void modifierCandidat(Candidat c) {
+        // 1. Load all candidates from the file
+        List<Candidat> allCandidats = getAllCandidats();
+        boolean found = false;
+
+        // 2. Find the candidate in the list and replace it
+        for (int i = 0; i < allCandidats.size(); i++) {
+            if (allCandidats.get(i).getNumCin() == c.getNumCin()) {
+                // Replace the old object with the modified one
+                allCandidats.set(i, c);
+                found = true;
+                break;
+            }
+        }
+
+        // 3. Save the updated list back to the file
+        if (found) {
+            try {
+                mapper.writerWithDefaultPrettyPrinter()
+                        .writeValue(new File(FILE_PATH), allCandidats);
+                System.out.println("✅ Candidat modified successfully!");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("❌ Error while saving modification!");
+            }
+        } else {
+            System.out.println("❌ Candidat to modify not found in file.");
+        }
+    }
+
 }

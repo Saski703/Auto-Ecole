@@ -20,7 +20,7 @@ public class SeanceController {
     }
 
     public Seance rechercherSeance(int num){
-        return null;
+        return seanceServices.rechercherSeance(num);
     }
 
     public void ajoutSeance(Seance seance){
@@ -41,5 +41,9 @@ public class SeanceController {
 
     public boolean isMoniteurDisponible(Moniteur moniteur, LocalDate date, LocalTime heure){
         return seanceServices.isMoniteurDisponible(moniteur, date, heure);
+    }
+
+    public void modifierSeance(Seance s){
+        seanceServices.modifierSeance(s);
     }
 }

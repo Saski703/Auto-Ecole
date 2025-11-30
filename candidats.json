@@ -5,7 +5,10 @@
   "date" : [ 2025, 11, 18 ],
   "adresse" : "azazaz",
   "telephone" : 21212121,
-  "typePermis" : "A"
+  "typePermis" : "A",
+  "total" : 0.0,
+  "paye" : 0.0,
+  "reste" : 0.0
 }, {
   "numCin" : 11141265,
   "nom" : "aaaa",
@@ -13,7 +16,10 @@
   "date" : [ 2025, 11, 18 ],
   "adresse" : "aaan",
   "telephone" : 28143695,
-  "typePermis" : "B"
+  "typePermis" : "B",
+  "total" : 0.0,
+  "paye" : 0.0,
+  "reste" : 0.0
 }, {
   "numCin" : 11224455,
   "nom" : "aaaa",
@@ -21,5 +27,19 @@
   "date" : [ 2025, 11, 26 ],
   "adresse" : "azeeza",
   "telephone" : 21548736,
-  "typePermis" : "B"
+  "typePermis" : "B",
+  "total" : 0.0,
+  "paye" : 0.0,
+  "reste" : 0.0
+}, {
+  "numCin" : 11472828,
+  "nom" : "Malek",
+  "prenom" : "hichri",
+  "date" : [ 2025, 11, 30 ],
+  "adresse" : "newYork",
+  "telephone" : 28543651,
+  "typePermis" : "B",
+  "total" : 0.0,
+  "paye" : 0.0,
+  "reste" : 0.0
 } ]

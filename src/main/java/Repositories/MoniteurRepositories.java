@@ -1,6 +1,7 @@
 package Repositories;
 
 import Models.Moniteur;
+import Models.Moniteur;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +43,7 @@ public class MoniteurRepositories {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("❌ Error while saving candidat!");
+            System.out.println("❌ Error while saving moniteur!");
         }
     }
 
@@ -80,5 +81,35 @@ public class MoniteurRepositories {
             }
         }
         return removed;
+    }
+
+    public void modifierMoniteur(Moniteur c) {
+        // 1. Load all moniteures from the file
+        List<Moniteur> allMoniteurs = getAllMoniteurs();
+        boolean found = false;
+
+        // 2. Find the moniteure in the list and replace it
+        for (int i = 0; i < allMoniteurs.size(); i++) {
+            if (allMoniteurs.get(i).getCin() == c.getCin()) {
+                // Replace the old object with the modified one
+                allMoniteurs.set(i, c);
+                found = true;
+                break;
+            }
+        }
+
+        // 3. Save the updated list back to the file
+        if (found) {
+            try {
+                mapper.writerWithDefaultPrettyPrinter()
+                        .writeValue(new File(FILE_PATH), allMoniteurs);
+                System.out.println("✅ Moniteur modified successfully!");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("❌ Error while saving modification!");
+            }
+        } else {
+            System.out.println("❌ Moniteur to modify not found in file.");
+        }
     }
 }

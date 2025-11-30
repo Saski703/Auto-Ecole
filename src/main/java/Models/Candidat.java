@@ -11,7 +11,9 @@ public class Candidat {
     private String adresse;
     private int telephone;
     private String typePermis;
-
+    private double total;
+    private double paye;
+    private double reste;
     public Candidat() {
     }
     public Candidat(int numCin, String nom, String prenom, String adresse,int telephone, String typePermis) {
@@ -90,6 +92,30 @@ public class Candidat {
 
     public void setTypePermis(String typePermis) {
         this.typePermis = typePermis;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public double getPaye() {
+        return paye;
+    }
+
+    public void setPaye(double paye) {
+        this.paye = paye;
+    }
+
+    public double getReste() {
+        return reste;
+    }
+
+    public void setReste(double reste) {
+        this.reste = reste;
     }
 
     @Override

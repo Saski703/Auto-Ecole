@@ -1,28 +1,7 @@
 [ {
-  "cin" : 11,
-  "nom" : "zzaea",
-  "prenom" : "azeaze",
-  "etat" : false,
-  "prixCode" : 54.0,
-  "prixConduit" : 54.0,
-  "nbHeureCode" : 54,
-  "nbHeureConduit" : 54
-}, {
-  "cin" : 65445,
-  "nom" : "efef",
-  "prenom" : "efef",
-  "etat" : true,
-  "prixCode" : 500.0,
-  "prixConduit" : 200.0,
-  "nbHeureCode" : 20,
-  "nbHeureConduit" : 10
-}, {
-  "cin" : 11445287,
+  "cin" : 11447788,
   "nom" : "aaaa",
   "prenom" : "bbbb",
-  "etat" : true,
   "prixCode" : 20.0,
-  "prixConduit" : 10.0,
-  "nbHeureCode" : 0,
-  "nbHeureConduit" : 0
+  "prixConduit" : 20.0
 } ]

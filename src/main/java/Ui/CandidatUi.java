@@ -2,166 +2,178 @@ package Ui;
 
 import Controllers.CandidatController;
 import Models.Candidat;
-
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class CandidatUi {
 
-    CandidatController candidatController = new CandidatController();
+    CandidatController controller = new CandidatController();
+    Scanner sc = new Scanner(System.in);
 
-    public void Menu(){
-        System.out.println("-----Menu-----");
-        System.out.println("1.Ajout Condidat");
-        System.out.println("2.Modifier Condidat");
-        System.out.println("3.Supprimer Condidat");
-        System.out.println("4.Rechercher Condidat");
-        System.out.println("5.afficher Les Condidats");
-        System.out.println("6 Exit");
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-        switch(choice){
-            case 1:
-                ajoutCandidat();
-                break;
-            case 2:
-                modifierCandidat();
-                break;
-            case 3:
-                suppressionCandidat();
-                break;
-            case 4:
-                recherchreCandidat();
-                break;
-            case 5:
-                afficherLesCandidats();
-                break;
-            case 6:
-                System.out.println("Exit");
+    public void Menu() {
+        while (true) {
+            System.out.println("\n--- GESTION CANDIDATS ---");
+            System.out.println("1. Ajouter");
+            System.out.println("2. Modifier");
+            System.out.println("3. Supprimer");
+            System.out.println("4. Rechercher (Détails & Paiement)");
+            System.out.println("5. Lister tout");
+            System.out.println("6. Retour");
+            System.out.print("Choix: ");
+
+            try {
+                int choix = Integer.parseInt(sc.nextLine());
+                switch (choix) {
+                    case 1: ajout(); break;
+                    case 2: modifier(); break;
+                    case 3: supprimer(); break;
+                    case 4: rechercher(); break;
+                    case 5: controller.afficherLesCandidats(); break;
+                    case 6: return;
+                    default: System.out.println("Choix invalide.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Erreur: Veuillez entrer un chiffre !");
+            }
+        }
+    }
+
+    public void ajout() {
+        System.out.println("\n--- NOUVEAU CANDIDAT ---");
+        try {
+            System.out.print("CIN (8 chiffres): ");
+            int cin = Integer.parseInt(sc.nextLine());
+            if (controller.rechercheCandidat(cin) != null) {
+                System.out.println("❌ Ce CIN existe déjà !");
                 return;
-            default:
-                System.out.println("Invalid choice");
-        }
-        Menu();
-    }
-    public void ajoutCandidat(){
-        System.out.println("-----Ajout Condidat-----");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Num Cin");
-        int numCin = sc.nextInt();
-        if(candidatController.rechercheCandidat(numCin) != null) {
-            System.out.println("Un Candidat with this NumCin already exists.");
-            return;
-        }
-        System.out.println("Nom :");
-        String nom = sc.next();
-        System.out.println("Prenom :");
-        String prenom = sc.next();
-        System.out.println("Adresse :");
-        String adresse = sc.next();
-        System.out.println("telephone :");
-        int telephone = sc.nextInt();
-        System.out.println("type permis :");
-        String permis = sc.next();
-
-        Candidat c = new Candidat(numCin, nom, prenom, adresse, telephone, permis);
-        candidatController.ajoutCandidat(c);
-    }
-
-    public void modifierCandidat(){
-        System.out.println("-----Modifier Condidat-----");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Num Cin :");
-        int numCin = sc.nextInt();
-        Candidat c = candidatController.rechercheCandidat(numCin);
-
-
-        if(c!=null){
-
-            String name = c.getNom();
-            String prenom = c.getPrenom();
-            String adresse = c.getAdresse();
-            int telephone = c.getTelephone();
-            String permis = c.getTypePermis();
-            LocalDate date = c.getDate();
-
-            System.out.println(c.toString());
-            System.out.println("do you want to modifier 'name'? (y/n)");
-            String response = sc.next();
-            if(response.equals("y")){
-                System.out.println("new name: ");
-                name = sc.next();
             }
 
-            System.out.println("do you want to modifier 'prenom'? (y/n)");
-            response = sc.next();
-            if(response.equals("y")){
-                System.out.println("new prenom: ");
-                prenom = sc.next();
-            }
-            System.out.println("do you want to modifier 'adresse'? (y/n)");
-            response = sc.next();
-            if(response.equals("y")){
-                System.out.println("new adresse: ");
-                adresse = sc.next();
-            }
-            System.out.println("do you want to modifier 'telephone'? (y/n)");
-            response = sc.next();
-            if(response.equals("y")){
-                System.out.println("new telephone: ");
-                telephone = sc.nextInt();
-            }
-            System.out.println("do you want to modifier 'permis'? (y/n)");
-            response = sc.next();
-            if(response.equals("y")){
-                System.out.println("new permis: ");
-                permis = sc.next();
+            // --- VALIDATION NOM (Pas de chiffres) ---
+            String nom;
+            while (true) {
+                System.out.print("Nom: ");
+                nom = sc.nextLine().trim();
+                // Regex: Uniquement lettres (a-z), espaces et tirets
+                if (!nom.isEmpty() && nom.matches("[a-zA-Z -]+")) {
+                    break;
+                }
+                System.out.println("❌ Le nom ne doit contenir que des lettres (ex: Ben Ali).");
             }
 
-            Candidat c1 = new Candidat(numCin, name, prenom, date,  adresse, telephone, permis);
+            // --- VALIDATION PRENOM (Pas de chiffres) ---
+            String prenom;
+            while (true) {
+                System.out.print("Prénom: ");
+                prenom = sc.nextLine().trim();
+                if (!prenom.isEmpty() && prenom.matches("[a-zA-Z -]+")) {
+                    break;
+                }
+                System.out.println("❌ Le prénom ne doit contenir que des lettres.");
+            }
 
-            candidatController.suppressionCandidat(c.getNumCin());
-            candidatController.ajoutCandidat(c1);
+            System.out.print("Adresse: ");
+            String adr = sc.nextLine();
 
-        }else {
-            System.out.println("Candidat inexistant");
+            System.out.print("Téléphone (8 chiffres): ");
+            int tel = Integer.parseInt(sc.nextLine());
+
+            // --- VALIDATION PERMIS ---
+            String permis;
+            while(true) {
+                System.out.print("Type Permis (A, B, C...): ");
+                permis = sc.nextLine().toUpperCase();
+                if(permis.matches("[A-Z0-9+]+")) break;
+                System.out.println("❌ Format invalide.");
+            }
+
+            Candidat c = new Candidat(cin, nom, prenom, adr, tel, permis);
+
+            // Prix approximatif (F1)
+            ///if(permis.contains("C") || permis.contains("D")) c.setMontantTotal(2000);
+            ///else c.setMontantTotal(1200);
+
+            controller.ajoutCandidat(c);
+            System.out.println("✅ Candidat ajouté.");
+
+        } catch (NumberFormatException e) {
+            System.out.println("❌ Erreur: CIN et Téléphone doivent être des chiffres.");
         }
-
-
     }
 
-    public void suppressionCandidat(){
-        System.out.println("-----Supprimer Condidat-----");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Num Cin :");
-        int numCin = sc.nextInt();
-        boolean v =  candidatController.suppressionCandidat(numCin);
-        if(v){
-            System.out.println("Candidat supprimer");
-        }else {
-            System.out.println("Candidat introuvable");
+    public void modifier() {
+        System.out.print("\nCIN du candidat à modifier: ");
+        try {
+            int cin = Integer.parseInt(sc.nextLine());
+            Candidat c = controller.rechercheCandidat(cin);
+
+            if (c == null) {
+                System.out.println("❌ Introuvable.");
+                return;
+            }
+
+            System.out.println("Laissez vide et tapez Entrée pour ne pas changer.");
+
+            // --- MODIF NOM ---
+            while(true) {
+                System.out.print("Nom (" + c.getNom() + "): ");
+                String nom = sc.nextLine().trim();
+                if (nom.isEmpty()) break; // Pas de changement
+                if (nom.matches("[a-zA-Z -]+")) {
+                    c.setNom(nom);
+                    break;
+                }
+                System.out.println("❌ Invalide (Lettres uniquement).");
+            }
+
+            // --- MODIF PRENOM ---
+            while(true) {
+                System.out.print("Prénom (" + c.getPrenom() + "): ");
+                String prenom = sc.nextLine().trim();
+                if (prenom.isEmpty()) break;
+                if (prenom.matches("[a-zA-Z -]+")) {
+                    c.setPrenom(prenom);
+                    break;
+                }
+                System.out.println("❌ Invalide (Lettres uniquement).");
+            }
+
+            System.out.print("Téléphone (" + c.getTelephone() + "): ");
+            String telStr = sc.nextLine();
+            if (!telStr.isEmpty()) c.setTelephone(Integer.parseInt(telStr));
+
+            System.out.print("Adresse (" + c.getAdresse() + "): ");
+            String adr = sc.nextLine();
+            if (!adr.isEmpty()) c.setAdresse(adr);
+
+            controller.modifierCandidat(c);
+            System.out.println("✅ Modifications enregistrées.");
+
+        } catch (Exception e) {
+            System.out.println("❌ Erreur de saisie.");
         }
-
-
     }
 
-    public void recherchreCandidat() {
-        System.out.println("-----Recherche Condidat-----");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Num Cin :");
-        int numCin = sc.nextInt();
-        Candidat c = candidatController.rechercheCandidat(numCin);
-        if(c!=null){
-            System.out.println(c.toString());
-        }else {
-            System.out.println("Candidat inexistant");
-        }
-
+    public void supprimer() {
+        System.out.print("\nCIN à supprimer: ");
+        try {
+            int cin = Integer.parseInt(sc.nextLine());
+            if (controller.suppressionCandidat(cin)) System.out.println("🗑️ Candidat supprimé.");
+            else System.out.println("❌ Introuvable.");
+        } catch (Exception e) { System.out.println("❌ CIN invalide."); }
     }
 
-    public void afficherLesCandidats() {
-        System.out.println("-----Afficher les Condidats-----");
-        candidatController.afficherLesCandidats();
+    public void rechercher() {
+        System.out.print("\nCIN recherché: ");
+        try {
+            int cin = Integer.parseInt(sc.nextLine());
+            Candidat c = controller.rechercheCandidat(cin);
+            if (c != null) {
+                System.out.println("--------------------------------");
+                System.out.println(c.toString());
+                System.out.println("💰 PRIX TOTAL: " + c.getTotal() + " DT");
+                System.out.println("✅ PAYÉ:       " + c.getPaye() + " DT");
+                System.out.println("⚠️ RESTE:      " + (c.getTotal() - c.getPaye()) + " DT");
+                System.out.println("--------------------------------");
+            } else { System.out.println("❌ Introuvable."); }
+        } catch (Exception e) { System.out.println("❌ Erreur."); }
     }
-
 }

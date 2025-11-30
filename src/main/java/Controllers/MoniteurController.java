@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Candidat;
 import Models.Moniteur;
 import Models.Seance;
 import Services.MoniteurServices;
@@ -35,6 +36,10 @@ public class MoniteurController {
 
     public double calculerSalaire(int cin, int annee, int mois) {
         return moniteurServices.calculerSalaire(cin, annee, mois);
+    }
+
+    public void modifierMoniteur(Moniteur m) {
+        moniteurServices.modifierMoniteur(m);
     }
 
 }

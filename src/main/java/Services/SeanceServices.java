@@ -60,7 +60,10 @@ public class SeanceServices {
                 }
             }
         }
-
         return true;
+    }
+
+    public void modifierSeance(Seance s){
+        seanceRepositories.modifierSeance(s);
     }
 }

@@ -77,7 +77,6 @@ public class MoniteurServices {
         }
 
 
-
         if(moniteur == null){
             return -1;
         }else {
@@ -85,4 +84,8 @@ public class MoniteurServices {
         }
     }
 
+
+    public void modifierMoniteur(Moniteur m) {
+        moniteurRepositories.modifierMoniteur(m);
+    }
 }
