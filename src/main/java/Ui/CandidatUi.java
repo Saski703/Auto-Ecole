@@ -88,8 +88,8 @@ public class CandidatUi {
             Candidat c = new Candidat(cin, nom, prenom, adr, tel, permis);
 
             // Prix approximatif (F1)
-            ///if(permis.contains("C") || permis.contains("D")) c.setMontantTotal(2000);
-            ///else c.setMontantTotal(1200);
+            if(permis.contains("C") || permis.contains("D")) c.setTotal(2000);
+            else c.setTotal(1200);
 
             controller.ajoutCandidat(c);
             System.out.println("✅ Candidat ajouté.");
