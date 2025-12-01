@@ -10,10 +10,12 @@ import java.time.LocalTime;
         include = JsonTypeInfo.As.PROPERTY,
         property = "type"
 )
-// 2. Map the values of "type" to the specific classes
+
 @JsonSubTypes({
         @JsonSubTypes.Type(value = SeanceCode.class, name = "CODE"),
-        @JsonSubTypes.Type(value = SeanceConduit.class, name = "CONDUITE")
+        @JsonSubTypes.Type(value = SeanceConduit.class, name = "CONDUITE"),
+        @JsonSubTypes.Type(value = ExamenCode.class, name = "EXAMEN_CODE"),
+        @JsonSubTypes.Type(value = ExamenConduit.class, name = "EXAMEN_CONDUITE")
 })
 public abstract class Seance {
     protected int num;

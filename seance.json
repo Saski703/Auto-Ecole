@@ -23,4 +23,42 @@
   },
   "prix" : 30.0,
   "type" : "CODE"
+}, {
+  "num" : 4,
+  "date" : [ 2025, 12, 1 ],
+  "heure" : [ 9, 0 ],
+  "moniteur" : {
+    "cin" : 11447788,
+    "nom" : "aaaa",
+    "prenom" : "bbbb",
+    "prixCode" : 20.0,
+    "prixConduit" : 20.0
+  },
+  "candidat" : {
+    "numCin" : 11472828,
+    "nom" : "Malek",
+    "prenom" : "hichri",
+    "date" : [ 2025, 11, 30 ],
+    "adresse" : "newYork",
+    "telephone" : 28543651,
+    "typePermis" : "B",
+    "total" : 0.0,
+    "paye" : 0.0,
+    "reste" : 0.0
+  },
+  "prix" : 150.0,
+  "result" : 1,
+  "vehicule" : {
+    "type" : "voiture",
+    "date" : [ 2017, 10, 10 ],
+    "dateVignette" : [ 2025, 1, 1 ],
+    "dateAssurance" : [ 2025, 1, 1 ],
+    "dateVisiteTechnique" : [ 2025, 1, 1 ],
+    "dateVidange" : [ 2025, 1, 1 ],
+    "age" : 10,
+    "kmTotale" : 5000.0,
+    "maintenance" : [ ],
+    "mat" : "1515TUN2020"
+  },
+  "type" : "EXAMEN_CONDUITE"
 } ]

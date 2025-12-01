@@ -26,7 +26,7 @@ public class SeanceUi {
             System.out.println("\n========================================");
             System.out.println("        📅 MENU SÉANCES           ");
             System.out.println("========================================");
-            System.out.println("[1] ▶ Ajouter une Séance (Code/Conduite)");
+            System.out.println("[1] ▶ Ajouter une Séance (Code/Conduite) / Examen");
             System.out.println("[2] ▶ Supprimer une Séance");
             System.out.println("[3] ▶ Modifier une Séance");
             System.out.println("[4] ▶ Afficher TOUTES les Séances");
@@ -58,7 +58,6 @@ public class SeanceUi {
     public void ajoutSeance() {
         System.out.println("\n===== ➕ NOUVELLE SÉANCE =====");
         try {
-            // 1. Numéro
             System.out.print("Numéro de Séance : ");
             int num = Integer.parseInt(sc.nextLine());
             if(seanceController.rechercherSeance(num) != null) {
@@ -66,22 +65,23 @@ public class SeanceUi {
                 return;
             }
 
-            // 2. Type
-            System.out.print("Type (1: Code, 2: Conduite) : ");
+            System.out.println("Type de réservation :");
+            System.out.println("  1. Leçon de Code");
+            System.out.println("  2. Leçon de Conduite");
+            System.out.println("  3. EXAMEN");
+            System.out.print("👉 Choix : ");
             int typeChoice = Integer.parseInt(sc.nextLine());
-            if (typeChoice != 1 && typeChoice != 2) {
+            if (typeChoice != 1 && typeChoice != 2 && typeChoice != 3) {
                 System.out.println("❌ Type invalide.");
                 return;
             }
 
-            // 3. Date & Heure
             System.out.print("Date (yyyy-MM-dd) : ");
             LocalDate date = LocalDate.parse(sc.nextLine());
 
             System.out.print("Heure (HH:mm) : ");
             LocalTime heure = LocalTime.parse(sc.nextLine());
 
-            // 4. Moniteur & Disponibilité
             System.out.print("CIN Moniteur : ");
             int cinMoniteur = Integer.parseInt(sc.nextLine());
             Moniteur moniteur = moniteurController.rechercheMoniteur(cinMoniteur);
@@ -91,13 +91,11 @@ public class SeanceUi {
                 return;
             }
 
-            // Vérification conflit (F4)
             if (!seanceController.isMoniteurDisponible(moniteur, date, heure)) {
                 System.out.println("🚨 CONFLIT : Le moniteur " + moniteur.getNom() + " est déjà occupé ce jour-là à " + heure + " !");
                 return;
             }
 
-            // 5. Candidat
             System.out.print("CIN Candidat : ");
             int cinCandidat = Integer.parseInt(sc.nextLine());
             Candidat candidat = candidatController.rechercheCandidat(cinCandidat);
@@ -107,30 +105,52 @@ public class SeanceUi {
                 return;
             }
 
-            // 6. Prix
             System.out.print("Prix (DT) : ");
-            double prix = Double.parseDouble(sc.nextLine());
-
-            // 7. Création de l'objet
+            double prix;
             Seance seance = null;
 
             if (typeChoice == 1) {
-                // SEANCE CODE
-                // Note: Assurez-vous que votre modèle SeanceCode a bien ce constructeur avec Candidat
+                System.out.print("Prix Leçon Code (DT) : ");
+                prix = Double.parseDouble(sc.nextLine());
                 seance = new SeanceCode(num, date, heure, moniteur, candidat, prix);
-            } else {
-                // SEANCE CONDUITE
+
+            } else if (typeChoice == 2) {
+                System.out.print("Prix Leçon Conduite (DT) : ");
+                prix = Double.parseDouble(sc.nextLine());
                 System.out.print("Matricule Véhicule : ");
                 String mat = sc.nextLine();
                 Vehicule v = vehiculeController.rechercherVehicule(mat);
+                if (v == null) { System.out.println("❌ Véhicule introuvable."); return; }
 
-                if(v == null) {
-                    System.out.println("❌ Véhicule introuvable.");
-                    return;
-                }
-
-                // Note: Assurez-vous que votre modèle SeanceConduit a bien ce constructeur avec Candidat
                 seance = new SeanceConduit(num, date, heure, moniteur, candidat, prix, v);
+
+            } else if (typeChoice == 3) {
+                System.out.println("Type d'Examen :");
+                System.out.println("  A. Théorique (Code)");
+                System.out.println("  B. Pratique (Conduite)");
+                System.out.print("👉 Choix : ");
+                String examType = sc.nextLine().toUpperCase();
+
+                System.out.print("Frais d'Examen (DT) : ");
+                prix = Double.parseDouble(sc.nextLine());
+
+                if (examType.equals("A")) {
+                    System.out.println("Resultat ( 1 if passed, or 0)");
+                    int resultat = Integer.parseInt(sc.nextLine());
+
+                    seance = new ExamenCode(num, date, heure, moniteur, candidat, resultat, prix);
+                } else {
+                    System.out.println("Resultat ( 1 if passed, or 0)");
+                    int resultat = Integer.parseInt(sc.nextLine());
+                    System.out.print("Matricule Véhicule Examen : ");
+                    String mat = sc.nextLine();
+                    Vehicule v = vehiculeController.rechercherVehicule(mat);
+                    if (v == null) { System.out.println("❌ Véhicule introuvable."); return; }
+
+                    seance = new ExamenConduit(num, date, heure, moniteur, candidat, prix, resultat, v);
+                }
+            } else {
+                System.out.println("❌ Type invalide."); return;
             }
 
             seanceController.ajoutSeance(seance);
@@ -246,6 +266,9 @@ public class SeanceUi {
 
                     if (s instanceof SeanceConduit) {
                         Vehicule v = ((SeanceConduit) s).getVehicule();
+                        if (v != null) vehiculeInfo = v.getMat();
+                    } else if (s instanceof ExamenConduit) {
+                        Vehicule v = ((ExamenConduit) s).getVehicule();
                         if (v != null) vehiculeInfo = v.getMat();
                     }
 
